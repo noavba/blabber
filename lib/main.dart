@@ -7,6 +7,7 @@ import 'pages/home_page.dart';
 
 void main() async {
 
+
   runApp(const MyApp());
 }
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //when creating a new page; use '/route name' and then the context is the class name that is created
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'login_page.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -9,6 +9,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: ElevatedButton(
