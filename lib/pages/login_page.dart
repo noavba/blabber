@@ -8,20 +8,30 @@ class LoginPage extends StatelessWidget{
   @override Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: Colors.grey,
-      body: Column(children: [
-        //blabber logo
-        
-
-        //username textfield
-
-        // pw textfield
-
-        //forgot password
-
-        //sign in
-
-        // sign up
-      ],)
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 50),
+        child: Center(
+          child: Column(children: [
+           
+            ElevatedButton(onPressed: (){
+              Navigator.pushNamed(context, '/homePage');
+            }, child: Text('Login'))
+            //blabber logo
+              
+          
+          
+            //username textfield
+          
+            // pw textfield
+          
+            //forgot password
+          
+            //sign in
+          
+            // sign up
+          ],),
+        ),
+      )
     );
   }
 }
