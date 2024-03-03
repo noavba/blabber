@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:blabber/components/MyTextField.dart';
-import 'package:blabber/components/LoginButton.dart';
+import 'package:blabber/components/my_text_field.dart';
+import 'package:blabber/components/login_button.dart';
 
 
 class LoginPage extends StatelessWidget{
@@ -21,8 +21,14 @@ class LoginPage extends StatelessWidget{
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 41, 44, 46),
       body: SafeArea(
-        child: Column(children: [
-          const SizedBox(height: 50),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          const Text("Blabber",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 30 ),
+            ),
+            const SizedBox(height: 20),
+
           const Text("Temporary Login Screen",
             style:TextStyle(color: Colors.white),
             ),
@@ -70,7 +76,7 @@ class LoginPage extends StatelessWidget{
           ),
           
           
-          
+          //Sized boxes count as just white space inbetween elements
           const SizedBox(height: 25),
 
 
