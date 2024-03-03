@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:blabber/components/my_text_field.dart';
 import 'package:blabber/components/login_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 
 class LoginPage extends StatelessWidget{
   LoginPage({super.key});
 
   //login fields controllers
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
 
   //sign user in
-  void signUserIn(){
+  void signUserIn() async {
+
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
   
   }
   
@@ -38,7 +45,7 @@ class LoginPage extends StatelessWidget{
           //username textfield
 
           MyTextField(
-            controller: usernameController,
+            controller: emailController,
             hintText: 'Username',
             obscureText: false,
           ),
@@ -60,7 +67,7 @@ class LoginPage extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  'Forgot Password?',
+                  'place holder - Forgot Password?',
                   style: TextStyle(color: Colors.white),
                   ),
               ],
@@ -79,12 +86,6 @@ class LoginPage extends StatelessWidget{
           //Sized boxes count as just white space inbetween elements
           const SizedBox(height: 25),
 
-
-         ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, '/homePage');
-          }, child: const Text('Temporary Scene Switcher')),
-
-
           // sign up
 
           const Row(
@@ -96,7 +97,7 @@ class LoginPage extends StatelessWidget{
               ),
             SizedBox(width:4),
             Text(
-              'Register Now!',
+              ' Place holder - Register Now!',
               style: TextStyle(
                 color: Colors.blue, fontWeight: FontWeight.bold),
               ),
