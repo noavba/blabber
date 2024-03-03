@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "352896392153",
+    "project_id": "blabber-7468d",
+    "storage_bucket": "blabber-7468d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352896392153:android:764b9f0ebce26d526b57c8",
+        "android_client_info": {
+          "package_name": "com.example.blabber"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjGU6-Tt45LqPc3BdA13oc_XdmAXwRMV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
