@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'pages/login_page.dart';
 import 'pages/home_page.dart';
+import 'pages/login_or_register_page.dart';
+import 'pages/signup_page.dart';
 
 
 void main() async {
@@ -24,14 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //when creating a new page; use '/route name' and then the context is the class name that is created
-      initialRoute: '/',
-      routes: {
-        
-        '/': (context) => AuthPage(),
-        '/loginPage': (context) => LoginPage(),
-        '/homePage': (context) => Home(),
-      }
+      home: AuthPage(),
     );
   }
 }

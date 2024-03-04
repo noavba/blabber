@@ -1,65 +1,74 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:blabber/components/my_text_field.dart';
 import 'package:blabber/components/login_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:blabber/components/register_button.dart';
+import 'login_page.dart';
 
 
 
-class LoginPage extends StatefulWidget{
-  final  Function()? onTap;
-  LoginPage({super.key, required this.onTap});
+class RegisterPage extends StatefulWidget{
+  final  Function()? onTap;  
+  RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   //login fields controllers
   final emailController = TextEditingController();
 
+  final usernameController = TextEditingController();
+
   final passwordController = TextEditingController();
 
+  final passwordConfirmationController  = TextEditingController();
+
   //sign user in
-  void signUserIn() async {
+  void registerUser() async {
 
-    showDialog(context: context, builder: (context){
-      return const Center(
-        child: CircularProgressIndicator(),
+      //creating loading circle
+      showDialog(context: context, builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+  );
+
+  try{
+    if(passwordController.text == passwordConfirmationController.text){
+      //try to create an account if passwords match
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text, 
+        password: passwordController.text
       );
-
-    });
-
-      try{
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      Navigator.pop(context);
-      } on FirebaseAuthException catch (e) {
-        Navigator.pop(context);
-        //show error message
-        showErrorMessage();
-
-      }       
+    } else {
+      //show error message if not
+      showErrorMessage("Passwords do not match");
     }
+    //pop loading circle on home page
+    Navigator.pop(context);
+  } on FirebaseAuthException catch (e) {
+      //pop loading bubble
+      Navigator.pop(context);
+      //show error message
+      showErrorMessage(e.code);
+  }
 
-      //error popup
-    void showErrorMessage(){
+    
+  }
+  void showErrorMessage(String message){
 
       showDialog(
         context: context,
         builder:(context){
           return AlertDialog(
-            title: Text("Invalid Email/Password"),
+            title: Text(message),
           );
       },
       );
     }
-
-
-
-
 
   @override Widget build(BuildContext context){
     return Scaffold(
@@ -74,13 +83,13 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
           
-            const Text("Temporary Login Screen",
+            const Text("Temporary Register Screen",
               style:TextStyle(color: Colors.white),
               ),
             
             const SizedBox(height: 50),
           
-            //username textfield
+            //email textfield
           
             MyTextField(
               controller: emailController,
@@ -89,6 +98,14 @@ class _LoginPageState extends State<LoginPage> {
             ),
           
             const SizedBox(height: 5),
+            // username textfield
+            MyTextField(
+              controller: usernameController,
+              hintText: 'Username',
+              obscureText: false,
+              ),
+          
+            const SizedBox(height:5),
           
             // pw textfield
             MyTextField(
@@ -97,27 +114,22 @@ class _LoginPageState extends State<LoginPage> {
               obscureText: true,
             ),
           
-            //forgot password
+            // password confirmation
+            const SizedBox(height:5),
           
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'place holder - Forgot Password?',
-                    style: TextStyle(color: Colors.white),
-                    ),
-                ],
+          
+            MyTextField(
+              controller: passwordConfirmationController,
+              hintText: 'Confirm Password',
+              obscureText: true,
               ),
-            ),
           
           
-            //sign in
+            //create user button
             const SizedBox(height: 25),
           
-            LoginButton(
-              onTap: signUserIn,
+            RegisterButton(
+              onTap: registerUser,
             ),
             
             
@@ -126,21 +138,21 @@ class _LoginPageState extends State<LoginPage> {
           
             // sign up
           
-            Row(
+             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text('Not a member?',
+              Text('Already a member?',
                 style: TextStyle(
                   color: Colors.white),
                 ),
               SizedBox(width:4),
               GestureDetector(
                 onTap: widget.onTap,
-                  child: const Text(
-                  ' Place holder - Register Now!',
+                child: Text(
+                  ' Sign in',
                   style: TextStyle(
                     color: Colors.blue, fontWeight: FontWeight.bold),
-                ),
+                  ),
               ),
             ],
             ),
