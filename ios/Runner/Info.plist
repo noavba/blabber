@@ -45,12 +45,5 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true />
-	</dict>
-	<key>NSMicrophoneUsageDescirption</key>
-	<string>Microphone Usage is required to record audio for user posts</string>
 </dict>
 </plist>
