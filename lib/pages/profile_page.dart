@@ -3,12 +3,11 @@ import 'package:blabber/pages/auth_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:blabber/components/app_drawer.dart';
 
+
+
 class Profile extends StatelessWidget {
   Profile({super.key});
-
-  final user = FirebaseAuth.instance.currentUser!;
-
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +18,7 @@ class Profile extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: Center(
-          child: Text("Profile of: " + user.email!,
+          child: Text("Profile of: ",
           style: TextStyle(fontSize: 20)),
         ),
       );

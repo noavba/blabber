@@ -6,11 +6,10 @@ import 'package:blabber/components/app_drawer.dart';
 class Home extends StatelessWidget {
   Home({super.key});
 
-  final user = FirebaseAuth.instance.currentUser!;
-
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -19,9 +18,8 @@ class Home extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: Center(
-          child: Text("Logged in as: " + user.email!,
-          style: TextStyle(fontSize: 20)),
+        //checking to see if user is not nul
         ),
-      );
+    );
   }
 }

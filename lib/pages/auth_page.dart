@@ -29,11 +29,8 @@ class _AuthPageState extends State<AuthPage> {
             return Home();
           } else {
             //if not logged in then go here
-            return LoginOrRegisterPage();
+            return const LoginOrRegisterPage();
           }
-
-
-
         }
       ),
     );

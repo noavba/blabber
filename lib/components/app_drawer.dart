@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:blabber/pages/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:blabber/pages/profile_page.dart';
-import 'package:blabber/pages/home_page.dart';
+
+final user = FirebaseAuth.instance.currentUser!;
 
 class AppDrawer extends StatelessWidget{
 
+  AppDrawer({super.key});
 
 
-  const AppDrawer({super.key});
 
+  //im goignt o fucking scream
     void signUserOut(){
-    FirebaseAuth.instance.signOut();
-  }
+      FirebaseAuth.instance.signOut();
 
+    }
 
   @override 
   Widget build(BuildContext context){
@@ -22,7 +22,7 @@ class AppDrawer extends StatelessWidget{
       child: Column(
         children:[
             DrawerHeader(
-              child: Text("YapYapYap"),
+              child:Text(user.email!),
               ),
 
               //home page
@@ -37,10 +37,9 @@ class AppDrawer extends StatelessWidget{
                   ),
                   title: Text("Home Page"),
                   onTap: (){
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                    );
+                      Navigator.pop(context);
+
+                      Navigator.pushNamed(context,'/home_page');
                   }
                   ),
                 ),
@@ -58,10 +57,8 @@ class AppDrawer extends StatelessWidget{
                   ),
                   title: Text("Your Profile"),
                   onTap: (){
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Profile()),
-                    );
+
+                      Navigator.pushNamed(context, '/profile_page');
                   }
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'package:blabber/pages/auth_page.dart';
+import 'package:blabber/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -6,6 +7,7 @@ import 'pages/login_page.dart';
 import 'pages/home_page.dart';
 import 'pages/login_or_register_page.dart';
 import 'pages/signup_page.dart';
+import 'pages/home_page.dart';
 
 
 void main() async {
@@ -27,7 +29,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AuthPage(),
+      home: const AuthPage(),
+      routes: {
+        '/login_or_register': (context) => const LoginOrRegisterPage(),
+        '/home_page': (context) => Home(),
+        '/profile_page': (context) => Profile(),
+        '/auth_page': (context) => AuthPage(),
+        
+
+      }
     );
   }
 }

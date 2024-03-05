@@ -35,13 +35,17 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text,
         password: passwordController.text,
       );
+      //popping loading screen
       Navigator.pop(context);
+      
+      Navigator.pushReplacementNamed(context, '/home_page');
+      
       } on FirebaseAuthException catch (e) {
         Navigator.pop(context);
         //show error message
         showErrorMessage();
 
-      }       
+      }    
     }
 
       //error popup

@@ -22,7 +22,7 @@ class _LoginOrRegisterPageState extends State<LoginOrRegisterPage> {
   
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    // ALL THIS DOES IS SWITCH WHEN YOU PICK BETWEEN REGISTER AND LOG IN
       if(showLoginPage){
         return LoginPage(
               onTap: togglePages
