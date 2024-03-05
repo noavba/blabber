@@ -6,8 +6,9 @@ import 'package:blabber/components/app_drawer.dart';
 
 
 class Profile extends StatelessWidget {
+  
   Profile({super.key});
-
+  final user = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +28,7 @@ class Profile extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    user.email!,
+                    "text",
                     style: Theme.of(context)
                         .textTheme
                         .headline6

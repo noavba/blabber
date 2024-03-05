@@ -49,6 +49,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
     //pop loading circle on home page
     Navigator.pop(context);
+    Navigator.pushReplacementNamed(context, '/home_page');
   } on FirebaseAuthException catch (e) {
       //pop loading bubble
       Navigator.pop(context);

@@ -4,13 +4,17 @@ import 'package:blabber/pages/home_page.dart';
 import 'package:blabber/pages/profile_page.dart';
 
 
-final user = FirebaseAuth.instance.currentUser!;
-
 
 class AppDrawer extends StatelessWidget{
 
+
+  
+  AppDrawer({super.key});
+
   
 
+    // THIS IS REALLY GROSS NAVIGATION WE ARE GOING TO SWAP IT LATER
+    //I CBA TO DEAL WIHT THIS ANY TIME SOON DISGUSTING ANDROIDS
 
   //im goignt o fucking scream
     void signUserOut(context) async {
@@ -25,7 +29,7 @@ class AppDrawer extends StatelessWidget{
       child: Column(
         children:[
             DrawerHeader(
-              child: Text(user.email!),
+              child: Text(FirebaseAuth.instance.currentUser!.email!),
               ),
 
               //home page
