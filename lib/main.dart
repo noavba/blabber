@@ -29,6 +29,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color.fromARGB(255, 249, 227, 30),
+        ),
+      ),
       home: const AuthPage(),
       routes: {
         '/login_or_register': (context) => const LoginOrRegisterPage(),
