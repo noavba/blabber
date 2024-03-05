@@ -41,7 +41,6 @@ class MyApp extends StatelessWidget {
         '/profile_page': (context) => Profile(),
         '/auth_page': (context) => AuthPage(),
         
-
       }
     );
   }

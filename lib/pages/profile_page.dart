@@ -4,10 +4,13 @@ import 'package:blabber/pages/auth_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:blabber/components/app_drawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:blabber/database/firestore.dart';
 
 
 class Profile extends StatelessWidget {
+
+    final FirestoreDatabase database = FirestoreDatabase();
+
     void showErrorMessage(String message, context){
       showDialog(
         context: context,
@@ -186,10 +189,8 @@ class _TopPortion extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(bottom: 50),
           decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [Color(0xffF91C1F), Color(0xffDCC800)]),
+              image: DecorationImage(fit: BoxFit.cover,
+              image: NetworkImage('https://www.onlygfx.com/wp-content/uploads/2022/03/colorful-sound-wave-equalizer-2.png')),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(50),
                 bottomRight: Radius.circular(50),
@@ -211,19 +212,6 @@ class _TopPortion extends StatelessWidget {
                         fit: BoxFit.cover,
                         image: NetworkImage(
                             'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                    child: Container(
-                      margin: const EdgeInsets.all(8.0),
-                      decoration: const BoxDecoration(
-                          color: Colors.green, shape: BoxShape.circle),
-                    ),
                   ),
                 ),
               ],
