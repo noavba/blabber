@@ -3,10 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 final user = FirebaseAuth.instance.currentUser!;
 
+final user = FirebaseAuth.instance.currentUser!;
+
 class AppDrawer extends StatelessWidget{
 
+<<<<<<< HEAD
   AppDrawer({super.key});
 
+=======
+  
+>>>>>>> c815e9e437c98ae938979c5e021e6a3c1ef254c0
 
 
   //im goignt o fucking scream
@@ -22,7 +28,11 @@ class AppDrawer extends StatelessWidget{
       child: Column(
         children:[
             DrawerHeader(
+<<<<<<< HEAD
               child:Text(user.email!),
+=======
+              child: Text(user.email!),
+>>>>>>> c815e9e437c98ae938979c5e021e6a3c1ef254c0
               ),
 
               //home page
