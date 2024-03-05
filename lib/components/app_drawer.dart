@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:blabber/pages/home_page.dart';
+import 'package:blabber/pages/profile_page.dart';
+
 
 final user = FirebaseAuth.instance.currentUser!;
 
-final user = FirebaseAuth.instance.currentUser!;
 
 class AppDrawer extends StatelessWidget{
 
-<<<<<<< HEAD
-  AppDrawer({super.key});
-
-=======
   
->>>>>>> c815e9e437c98ae938979c5e021e6a3c1ef254c0
 
 
   //im goignt o fucking scream
-    void signUserOut(){
-      FirebaseAuth.instance.signOut();
-
+    void signUserOut(context) async {
+      await FirebaseAuth.instance.signOut();
+      Navigator.popAndPushNamed(context, '/login_or_register'); // Example route to navigate to after signout
     }
 
   @override 
@@ -28,11 +25,7 @@ class AppDrawer extends StatelessWidget{
       child: Column(
         children:[
             DrawerHeader(
-<<<<<<< HEAD
-              child:Text(user.email!),
-=======
               child: Text(user.email!),
->>>>>>> c815e9e437c98ae938979c5e021e6a3c1ef254c0
               ),
 
               //home page
@@ -47,9 +40,8 @@ class AppDrawer extends StatelessWidget{
                   ),
                   title: Text("Home Page"),
                   onTap: (){
-                      Navigator.pop(context);
-
-                      Navigator.pushNamed(context,'/home_page');
+                      Navigator.pop(context); // Close the drawer
+                      Navigator.pushReplacementNamed(context, '/home_page'); // Close the current page and push home page
                   }
                   ),
                 ),
@@ -67,8 +59,8 @@ class AppDrawer extends StatelessWidget{
                   ),
                   title: Text("Your Profile"),
                   onTap: (){
-
-                      Navigator.pushNamed(context, '/profile_page');
+                      Navigator.pop(context); // Close the drawer
+                      Navigator.pushReplacementNamed(context, '/profile_page'); // Close the current page and push profile page
                   }
                   ),
                 ),
@@ -101,7 +93,7 @@ class AppDrawer extends StatelessWidget{
                     ),
                     title: Text("Log Out"),
                     onTap: (){
-                      signUserOut();
+                      signUserOut(context);
                     }
                   ),
                 ),
