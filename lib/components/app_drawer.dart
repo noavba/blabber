@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:blabber/pages/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:blabber/pages/profile_page.dart';
+import 'package:blabber/pages/home_page.dart';
 
 class AppDrawer extends StatelessWidget{
 
@@ -35,7 +37,10 @@ class AppDrawer extends StatelessWidget{
                   ),
                   title: Text("Home Page"),
                   onTap: (){
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                    );
                   }
                   ),
                 ),
@@ -53,7 +58,10 @@ class AppDrawer extends StatelessWidget{
                   ),
                   title: Text("Your Profile"),
                   onTap: (){
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Profile()),
+                    );
                   }
                   ),
                 ),
