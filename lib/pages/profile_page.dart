@@ -28,7 +28,7 @@ class Profile extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "text",
+                    FirebaseAuth.instance.currentUser!.email!,
                     style: Theme.of(context)
                         .textTheme
                         .headline6
@@ -148,7 +148,7 @@ class _TopPortion extends StatelessWidget {
               gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
-                  colors: [Color(0xffF9E21E), Color(0xffF91C1F)]),
+                  colors: [Color(0xffF91C1F), Color(0xffDCC800)]),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(50),
                 bottomRight: Radius.circular(50),
