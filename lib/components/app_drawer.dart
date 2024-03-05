@@ -4,9 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:blabber/pages/profile_page.dart';
 import 'package:blabber/pages/home_page.dart';
 
+final user = FirebaseAuth.instance.currentUser!;
+
 class AppDrawer extends StatelessWidget{
 
-
+  
 
   const AppDrawer({super.key});
 
@@ -22,7 +24,7 @@ class AppDrawer extends StatelessWidget{
       child: Column(
         children:[
             DrawerHeader(
-              child: Text("YapYapYap"),
+              child: Text(user.email!),
               ),
 
               //home page
