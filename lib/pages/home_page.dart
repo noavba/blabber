@@ -18,7 +18,8 @@ class Home extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: Center(
-        //checking to see if user is not nul
+        child: Text(FirebaseAuth.instance.currentUser!.email!)
+        
         ),
     );
   }
