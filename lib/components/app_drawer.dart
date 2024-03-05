@@ -5,6 +5,7 @@ import 'package:blabber/pages/profile_page.dart';
 
 
 
+
 class AppDrawer extends StatelessWidget{
 
 
@@ -29,7 +30,7 @@ class AppDrawer extends StatelessWidget{
       child: Column(
         children:[
             DrawerHeader(
-              child: Text(FirebaseAuth.instance.currentUser!.email!),
+              child: Image(image: AssetImage('lib/assets/blabber.png')),
               ),
 
               //home page

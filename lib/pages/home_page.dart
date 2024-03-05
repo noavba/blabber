@@ -37,7 +37,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        elevation: 0,
+
       ),
       drawer: AppDrawer(),
       body: Column(
@@ -78,23 +78,29 @@ class Home extends StatelessWidget {
 
               // return as a list
               return Expanded(
-                child: ListView.builder(
-                  itemCount: posts.length,
-                  itemBuilder: (context, index) {
-                    //get indiv post
-                    final post = posts[index];
-                    //get data for each post
-                    String message = post['postMessage'];
-                    String userEmail = post['userEmail'];
-                    Timestamp timestamp = post['timestamp'];
-
-                    //return as a list tile
-
-                    return ListTile(
-                      title: Text(message),
-                      subtitle: Text(userEmail),
-                    );
-                  },
+                child: Container(
+        
+                  child: ListView.builder(
+                    itemCount: posts.length,
+                    itemBuilder: (context, index) {
+                      //get indiv post
+                      final post = posts[index];
+                      //get data for each post
+                      String message = post['postMessage'];
+                      String userEmail = post['userEmail'];
+                      Timestamp timestamp = post['timestamp'];
+                  
+                      //return as a list tile
+                  
+                      return Card(
+                        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        child: ListTile(
+                          title: Text(message),
+                          subtitle: Text(userEmail),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               );
             },

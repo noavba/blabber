@@ -10,6 +10,8 @@ import 'package:blabber/database/firestore.dart';
 class Profile extends StatelessWidget {
 
     final FirestoreDatabase database = FirestoreDatabase();
+    
+      get postCounter => postCounter;
 
     void showErrorMessage(String message, context){
       showDialog(
@@ -39,7 +41,7 @@ class Profile extends StatelessWidget {
     appBar: AppBar(
       title: const Text('Your Profile'),
       backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      elevation: 0,
+
     ),
     drawer: AppDrawer(),
     body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -58,9 +60,10 @@ class Profile extends StatelessWidget {
           Map<String, dynamic>? user = snapshot.data!.data();
           var userEmail = user!['email'];
           var userUsername = user['username'];
+
           return Column(
             children: [
-              const Expanded(flex: 2, child: _TopPortion()),
+              Expanded(flex: 2, child: _TopPortion()),
               Expanded(
                 flex: 3,
                 child: Padding(
@@ -76,7 +79,9 @@ class Profile extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FloatingActionButton.extended(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/profile_settings_page');
+                            },
                             heroTag: 'edit',
                             elevation: 0,
                             backgroundColor: Color.fromARGB(255, 230, 230, 230),
@@ -104,7 +109,65 @@ class Profile extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      const _ProfileInfoRow()
+                      const _ProfileInfoRow(),
+                      
+                      Container(
+                        child: StreamBuilder(
+                          stream: database.getPostsStream(),
+                          builder: (context, snapshot) {
+                            //show loading circle
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            //get posts for specified email, userEmail is in the firestore database, userEmail is also declared earlier.
+                            final posts = snapshot.data!.docs.where((post) => post['userEmail'] == userEmail).toList();
+
+                            //no data?
+                            if (snapshot.data == null || posts.isEmpty) {
+                              return const Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(25),
+                                  child: Text("No posts! It's pretty quiet in here,,,"),
+                                ),
+                              );
+                            }
+
+                            // return as a list
+                            return Expanded(
+                              child: Container(
+                                child: ListView.builder(
+                                  itemCount: posts.length,
+                                  itemBuilder: (context, index) {
+                                    //get indiv post
+                                    final post = posts[index];
+                                    //get data for each post
+                                    String message = post['postMessage'];
+                                    String userEmail = post['userEmail'];
+                                    // cant do timestamp to string, must convert and then use
+                                    Timestamp timestamp = post['timestamp'];
+                                    var date = timestamp.toDate().toString();
+                                    
+
+                                
+                                    //return as a list tile
+                                
+                                    return Card(
+                                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                                      child: ListTile(
+                                        title: Text(message),
+                                        subtitle: Text(date),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        )
+
+                      ),
                     ],
                   ),
                 ),
@@ -116,6 +179,7 @@ class Profile extends StatelessWidget {
         }
       },
     ),
+
   );
 }
 
@@ -125,6 +189,8 @@ class Profile extends StatelessWidget {
 class _ProfileInfoRow extends StatelessWidget {
   const _ProfileInfoRow({Key? key}) : super(key: key);
 
+
+
   final List<ProfileInfoItem> _items = const [
     ProfileInfoItem("Blabbers", 0),
     ProfileInfoItem("Followers", 0),
@@ -133,6 +199,7 @@ class _ProfileInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       height: 80,
       constraints: const BoxConstraints(maxWidth: 400),
@@ -179,8 +246,8 @@ class ProfileInfoItem {
 }
 
 class _TopPortion extends StatelessWidget {
-  const _TopPortion({Key? key}) : super(key: key);
-
+   _TopPortion({Key? key}) : super(key: key);
+  final User? currentUser = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -203,22 +270,40 @@ class _TopPortion extends StatelessWidget {
             height: 150,
             child: Stack(
               fit: StackFit.expand,
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')),
+                children: [
+                      StreamBuilder<DocumentSnapshot>(
+                        stream: FirebaseFirestore.instance.collection('Users').doc(currentUser!.email).snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return CircularProgressIndicator(); // Show a loading indicator while data is loading
+                          }
+
+                          var userData = snapshot.data!.data() as Map<String, dynamic>;
+                          var imageURL = userData['pfp'];
+
+                          return Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(imageURL)),
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(50),
+                                  bottomRight: Radius.circular(50),
+                                  topLeft: Radius.circular(50),
+                                  topRight: Radius.circular(50),
+                                
                   ),
                 ),
+               );
+             },
+          ) 
+
               ],
             ),
           ),
         )
       ],
+ 
     );
   }
 }

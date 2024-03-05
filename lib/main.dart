@@ -1,5 +1,6 @@
 import 'package:blabber/pages/auth_page.dart';
 import 'package:blabber/pages/profile_page.dart';
+import 'package:blabber/pages/profile_settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/home_page': (context) => Home(),
         '/profile_page': (context) => Profile(),
         '/auth_page': (context) => AuthPage(),
+        '/profile_settings_page': (context) => const ProfileSettingsPage(),
         
       }
     );

@@ -70,6 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
       await FirebaseFirestore.instance.collection("Users").doc(userCredential.user!.email).set({
         'email': userCredential.user!.email,
         'username': usernameController.text,
+        'pfp': 'https://art.pixilart.com/cfcc704b81e7fd9.png',
       });
     }
   }
