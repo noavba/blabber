@@ -31,28 +31,40 @@ class _HomeState extends State<Home> {
 
   TextEditingController newPostController = TextEditingController();
 
+  void _setStateIfMounted(VoidCallback fn) {
+    if (mounted) {
+      setState(fn);
+    }
+  }
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     initRecorder();
     setAudio();
-    //listen to audio player
-    audioPlayer.onPlayerStateChanged.listen((state){
-      setState((){
-        isPlaying = state == PlayerState.playing;
-      });
+    // listen to audio player
+    audioPlayer.onPlayerStateChanged.listen((state) {
+      if (mounted) {
+        setState(() {
+          isPlaying = state == PlayerState.playing;
+        });
+      }
     });
-    //listen to audio duration
-    audioPlayer.onDurationChanged.listen((newDuration){
-      setState((){
-        duration = newDuration;
-      });
+    // listen to audio duration
+    audioPlayer.onDurationChanged.listen((newDuration) {
+      if (mounted) {
+        setState(() {
+          duration = newDuration;
+        });
+      }
     });
 
-    audioPlayer.onPositionChanged.listen((newPosition){
-      setState((){
-        position = newPosition;
-      });
+    audioPlayer.onPositionChanged.listen((newPosition) {
+      if (mounted) {
+        setState(() {
+          position = newPosition;
+        });
+      }
     });
   }
 
