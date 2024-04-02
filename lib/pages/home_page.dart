@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:blabber/components/audio_player_widget.dart';
 import 'package:blabber/components/my_text_field.dart';
 import 'package:blabber/database/firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:blabber/pages/auth_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,9 +10,10 @@ import 'package:blabber/components/app_drawer.dart';
 import 'package:blabber/components/post_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:intl/intl.dart';
+
 
 
 class Home extends StatefulWidget {
@@ -164,11 +166,11 @@ class _HomeState extends State<Home> {
                   },
                   ),
                   CircleAvatar(
-                    radius: 15,
+                    radius: 20,
                     child: IconButton(icon: Icon(
                       isPlaying ? Icons.pause : Icons.play_arrow,
                     ),
-                    iconSize: 10,
+                    iconSize: 20,
                     onPressed: () async {
                       if(isPlaying){
                         await audioPlayer.pause();
@@ -224,16 +226,29 @@ class _HomeState extends State<Home> {
                       Timestamp timestamp = post['timestamp'];
                       String date = DateFormat('yyyy-MM-dd').format(timestamp.toDate());
 
+
                       //return as a list tile
-                  
+                            return StreamBuilder<DocumentSnapshot>(
+                              stream: FirebaseFirestore.instance.collection('Users').doc(userEmail).snapshots(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return CircularProgressIndicator(); // Show a loading indicator while data is loading
+                            }
+                            var userData = snapshot.data!.data() as Map<String, dynamic>;
+                            var imageURL = userData['pfp'];
+                            var username = userData['username'];
+
                       // Inside the build method
                             return Card(
                                 margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                                 child: Row(
                                   children: [
+                                     CircleAvatar(
+                                        backgroundImage: imageURL != null ? NetworkImage(imageURL) : null,
+                                      ),
                                     Expanded(
                                       child: ListTile(
-                                        title: Text(userEmail),
+                                        title: Text(username),
                                         subtitle: Text(date),
                                       ),
                                     ),
@@ -242,12 +257,13 @@ class _HomeState extends State<Home> {
                                 ),
                               );
                     },
-                  ),
+                  );
+                  },
                 ),
+              ),
               );
             },
           )
-
       ],
       )
     );

@@ -10,10 +10,11 @@ class PostButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(color: Colors.white54,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(30),
         ),
-        margin: const EdgeInsets.only(left:10),
-        child: Center(child: Icon(Icons.done),
+        margin: const EdgeInsets.only(left:30),
+        child: Center(child: 
+        Icon(Icons.done, size: 25)
         ),
       ),
     );

@@ -30,7 +30,7 @@ class FirestoreDatabase{
     Reference storageRef = FirebaseStorage.instance
         .ref()
         .child('audio_files')
-        .child('${DateTime.now().millisecondsSinceEpoch}.mp4');
+        .child('${DateTime.now().millisecondsSinceEpoch}.mp3');
     UploadTask uploadTask = storageRef.putFile(File(audioFileURL));
     TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
     String downloadURL = await snapshot.ref.getDownloadURL();

@@ -55,34 +55,37 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Slider(min: 0, max: 15,
-                  value: position.inSeconds.toDouble(), onChanged: (value) async {
+        Slider(min: 0, max: duration.inSeconds.toDouble(),
+                  value: position.inSeconds.toDouble(), 
+                  onChanged: (value) async {
                     final position = Duration(seconds: value.toInt());
                     await audioPlayer.seek(position);
-
                     await audioPlayer.resume();
                   },
                   ),
-        CircleAvatar(
-          radius: 15,
-          child: IconButton(
-            icon: Icon(
-              isPlaying ? Icons.pause : Icons.play_arrow,
-            ),
-            iconSize: 10,
-            onPressed: () async {
-              if (isPlaying) {
-                audioPlayer.pause();
-              } else {
-                audioPlayer.setSourceUrl(widget.audioFilePath);
-                audioPlayer.play;
-              }
-              setState(() {
-                isPlaying = !isPlaying;
-              });
-            },
-          ),
-        ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: CircleAvatar(
+                  radius: 15,
+                  child: IconButton(
+                    icon: Icon(
+                      isPlaying ? Icons.pause : Icons.play_arrow,
+                    ),
+                    iconSize: 10,
+                    onPressed: () async {
+                      if (isPlaying) {
+                        audioPlayer.pause();
+                      } else {
+                        audioPlayer.setSourceUrl(widget.audioFilePath);
+                        audioPlayer.resume();
+                      }
+                      setState(() {
+                        isPlaying = !isPlaying;
+                      });
+                    },
+                  ),
+                ),
+              ),
       ],
     );
   }
