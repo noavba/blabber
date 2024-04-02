@@ -59,9 +59,11 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   void fetchLikesCount() async {
   // Assuming you have a method in your FirestoreDatabase class to fetch likes count
   int count = await FirestoreDatabase().getLikesCount(widget.postID);
-  setState(() {
-    likesCount = count;
-  });
+  if(mounted){
+    setState(() {
+      likesCount = count;
+    });
+  }
 }
 
   @override
