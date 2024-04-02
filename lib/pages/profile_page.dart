@@ -19,6 +19,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  int numberOfBlabs = 0;
   late Future<DocumentSnapshot<Map<String, dynamic>>> _userDetailsFuture; // Define _userDetailsFuture
     final FirestoreDatabase database = FirestoreDatabase();
 
@@ -163,7 +164,26 @@ class _ProfileState extends State<Profile> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      const _ProfileInfoRow(),
+
+                      StreamBuilder(
+                      stream: database.getPostsStream(),
+                      builder: (context, snapshot) {
+                        // Show loading circle
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        final posts = snapshot.data!.docs.where((post) => post['userEmail'] == userEmail).toList();
+
+                        if (snapshot.data == null || posts.isEmpty) {
+                          return _ProfileInfoRow(numberOfBlabs: 0);
+                        }
+                        else {
+                          return _ProfileInfoRow(numberOfBlabs: posts.length);
+                        }
+                      },
+                    ),
                       
                     Container(
                     child: StreamBuilder(
@@ -197,7 +217,6 @@ class _ProfileState extends State<Profile> {
                               final post = posts[index];
                               // Get data for each post
                               String audioFilePath = post['audioFileURL'];
-                              String userEmail = post['userEmail'];
                               String postID = post['postID'];
                               // Convert timestamp to string
                               Timestamp timestamp = post['timestamp'];
@@ -258,18 +277,17 @@ class _ProfileState extends State<Profile> {
 
 
 class _ProfileInfoRow extends StatelessWidget {
-  const _ProfileInfoRow({Key? key}) : super(key: key);
+  final int numberOfBlabs;
 
-
-
-  final List<ProfileInfoItem> _items = const [
-    ProfileInfoItem("B!@6beRs", 0),
-    ProfileInfoItem("Followers", 0),
-    ProfileInfoItem("Friends", 0),
-  ];
+  const _ProfileInfoRow({Key? key, required this.numberOfBlabs}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final List<ProfileInfoItem> _items = [
+      ProfileInfoItem("B!@6s", numberOfBlabs),
+      ProfileInfoItem("Followers", 0),
+      ProfileInfoItem("Friends", 0),
+    ];
 
     return Container(
       height: 80,
@@ -277,13 +295,16 @@ class _ProfileInfoRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: _items
-            .map((item) => Expanded(
-                    child: Row(
+            .map(
+              (item) => Expanded(
+                child: Row(
                   children: [
                     if (_items.indexOf(item) != 0) const VerticalDivider(),
                     Expanded(child: _singleItem(context, item)),
                   ],
-                )))
+                ),
+              ),
+            )
             .toList(),
       ),
     );
@@ -309,7 +330,6 @@ class _ProfileInfoRow extends StatelessWidget {
         ],
       );
 }
-
 class ProfileInfoItem {
   final String title;
   final int value;
