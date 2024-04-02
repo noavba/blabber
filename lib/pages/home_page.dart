@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:blabber/components/audio_player_widget.dart';
 import 'package:blabber/components/my_text_field.dart';
 import 'package:blabber/database/firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:intl/intl.dart';
 
 
 class Home extends StatefulWidget {
@@ -27,6 +29,8 @@ class _HomeState extends State<Home> {
   bool isPlaying = false;
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
+  //map to hold all the different audio players
+
   //firestore access
   final FirestoreDatabase database = FirestoreDatabase();
 
@@ -42,7 +46,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     initRecorder();
-   // setAudio();
+    // setAudio();
     // listen to audio player
     audioPlayer.onPlayerStateChanged.listen((state) {
       if (mounted) {
@@ -105,18 +109,16 @@ class _HomeState extends State<Home> {
       String path = await getTemporaryDirectory().then((dir) => dir.path);
       String filePath = '$path/audio.aac';
       audioPlayer.setSourceDeviceFile(filePath);
+      return filePath;
   }
 
   //post message
-  void postMessage(){
+  void postBlab() async {
     //only post message if there is something there
-    if(newPostController.text.isNotEmpty){
-        String message = newPostController.text;
-        database.addPost(message);
-    }
-    
-    newPostController.clear();
-
+        String filePath = await stop();
+          if (filePath.isNotEmpty) {
+            database.addPost(filePath);
+          }
   }
 
   @override
@@ -153,7 +155,7 @@ class _HomeState extends State<Home> {
                   //),
                   //PostButton(onTap: postMessage,
                   //),
-                  Slider(min: 0, max: duration.inSeconds.toDouble(),
+                  Slider(min: 0, max: 15,
                   value: position.inSeconds.toDouble(), onChanged: (value) async {
                     final position = Duration(seconds: value.toInt());
                     await audioPlayer.seek(position);
@@ -179,7 +181,7 @@ class _HomeState extends State<Home> {
                     },
                     ),
                   ),
-                  PostButton(onTap: postMessage),
+                  PostButton(onTap: postBlab),
               ],
               
 
@@ -217,19 +219,28 @@ class _HomeState extends State<Home> {
                       //get indiv post
                       final post = posts[index];
                       //get data for each post
-                      String message = post['postMessage'];
+                      String audioFilePath = post['audioFileURL'];
                       String userEmail = post['userEmail'];
                       Timestamp timestamp = post['timestamp'];
-                  
+                      String date = DateFormat('yyyy-MM-dd').format(timestamp.toDate());
+
                       //return as a list tile
                   
-                      return Card(
-                        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        child: ListTile(
-                          title: Text(message),
-                          subtitle: Text(userEmail),
-                        ),
-                      );
+                      // Inside the build method
+                            return Card(
+                                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: ListTile(
+                                        title: Text(userEmail),
+                                        subtitle: Text(date),
+                                      ),
+                                    ),
+                                    AudioPlayerWidget(audioFilePath: audioFilePath),
+                                  ],
+                                ),
+                              );
                     },
                   ),
                 ),

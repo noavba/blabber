@@ -1,3 +1,5 @@
+import 'package:audioplayers/audioplayers.dart';
+import 'package:blabber/components/audio_player_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:blabber/pages/auth_page.dart';
@@ -5,13 +7,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:blabber/components/app_drawer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blabber/database/firestore.dart';
+import 'package:intl/intl.dart';
 
+class Profile extends StatefulWidget {
 
-class Profile extends StatelessWidget {
+  Profile({super.key});
 
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
     final FirestoreDatabase database = FirestoreDatabase();
-    
+
       get postCounter => postCounter;
+      final audioPlayer = AudioPlayer();
+       bool isPlaying = false;
+    Duration duration = Duration.zero;
+    Duration position = Duration.zero;
 
     void showErrorMessage(String message, context){
       showDialog(
@@ -23,7 +36,47 @@ class Profile extends StatelessWidget {
       },
       );
     }
+    void _setStateIfMounted(VoidCallback fn) {
+    if (mounted) {
+      setState(fn);
+    }
+  }
 
+  @override
+  void initState() {
+    super.initState();
+    // setAudio();
+    // listen to audio player
+    audioPlayer.onPlayerStateChanged.listen((state) {
+      if (mounted) {
+        setState(() {
+          isPlaying = state == PlayerState.playing;
+        });
+      }
+    });
+    // listen to audio duration
+    audioPlayer.onDurationChanged.listen((newDuration) {
+      if (mounted) {
+        setState(() {
+          duration = newDuration;
+        });
+      }
+    });
+
+    audioPlayer.onPositionChanged.listen((newPosition) {
+      if (mounted) {
+        setState(() {
+          position = newPosition;
+        });
+      }
+    });
+  }
+  @override
+  void dispose(){
+  audioPlayer.dispose();
+
+  super.dispose();
+  }
 
 
     // current logged in user
@@ -33,8 +86,6 @@ class Profile extends StatelessWidget {
       return await FirebaseFirestore.instance.collection("Users").doc(currentUser!.email).get();
     }
 
-  
-  Profile({super.key});
   @override
   Widget build(BuildContext context) {
   return Scaffold(
@@ -111,63 +162,64 @@ class Profile extends StatelessWidget {
                       const SizedBox(height: 16),
                       const _ProfileInfoRow(),
                       
-                      Container(
-                        child: StreamBuilder(
-                          stream: database.getPostsStream(),
-                          builder: (context, snapshot) {
-                            //show loading circle
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                            //get posts for specified email, userEmail is in the firestore database, userEmail is also declared earlier.
-                            final posts = snapshot.data!.docs.where((post) => post['userEmail'] == userEmail).toList();
+                    Container(
+                    child: StreamBuilder(
+                      stream: database.getPostsStream(),
+                      builder: (context, snapshot) {
+                        // Show loading circle
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        // Get posts for specified email, userEmail is in the Firestore database
+                        final posts = snapshot.data!.docs.where((post) => post['userEmail'] == userEmail).toList();
 
-                            //no data?
-                            if (snapshot.data == null || posts.isEmpty) {
-                              return const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(25),
-                                  child: Text("No posts! It's pretty quiet in here,,,"),
-                                ),
-                              );
-                            }
+                        // No data?
+                        if (snapshot.data == null || posts.isEmpty) {
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(25),
+                              child: Text("No posts! It's pretty quiet in here..."),
+                            ),
+                          );
+                        }
 
-                            // return as a list
-                            return Expanded(
-                              child: Container(
-                                child: ListView.builder(
-                                  itemCount: posts.length,
-                                  itemBuilder: (context, index) {
-                                    //get indiv post
-                                    final post = posts[index];
-                                    //get data for each post
-                                    String message = post['postMessage'];
-                                    String userEmail = post['userEmail'];
-                                    // cant do timestamp to string, must convert and then use
-                                    Timestamp timestamp = post['timestamp'];
-                                    var date = timestamp.toDate().toString();
-                                    
+                        // Return as a list
+                        return Expanded(
+                          child: ListView.builder(
+                            itemCount: posts.length,
+                            itemBuilder: (context, index) {
+                              // Get individual post
+                              final post = posts[index];
+                              // Get data for each post
+                              String audioFilePath = post['audioFileURL'];
+                              String userEmail = post['userEmail'];
+                              // Convert timestamp to string
+                              Timestamp timestamp = post['timestamp'];
+                              String date = DateFormat('yyyy-MM-dd').format(timestamp.toDate());
 
-                                
-                                    //return as a list tile
-                                
-                                    return Card(
-                                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                              // Return as a list tile
+                              return Card(
+                                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                                child: Row(
+                                  children: [
+                                    Expanded(
                                       child: ListTile(
-                                        title: Text(message),
+                                        title: Text(userEmail),
                                         subtitle: Text(date),
                                       ),
-                                    );
-                                  },
+                                    ),
+                                    AudioPlayerWidget(audioFilePath: audioFilePath),
+                                  ],
                                 ),
-                              ),
-                            );
-                          },
-                        )
-
-                      ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                     ],
                   ),
                 ),
@@ -182,7 +234,6 @@ class Profile extends StatelessWidget {
 
   );
 }
-
 }
 
 

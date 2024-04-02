@@ -8,8 +8,11 @@ Each post contains
 - Timestamp
 
 */
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class FirestoreDatabase{
 
@@ -22,11 +25,20 @@ class FirestoreDatabase{
 
   //post a message
 
-  Future<void> addPost(String message){
+  Future<Future<DocumentReference<Object?>>> addPost(String audioFileURL) async {
+    // Upload audio file to Firebase Storage
+    Reference storageRef = FirebaseStorage.instance
+        .ref()
+        .child('audio_files')
+        .child('${DateTime.now().millisecondsSinceEpoch}.mp4');
+    UploadTask uploadTask = storageRef.putFile(File(audioFileURL));
+    TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
+    String downloadURL = await snapshot.ref.getDownloadURL();
+    
     return posts.add({
       'userEmail': user!.email,
-      'postMessage': message,
       'timestamp': Timestamp.now(),
+      'audioFileURL': downloadURL,
     });
   }
 
