@@ -241,23 +241,47 @@ class _HomeState extends State<Home> {
                             var username = userData['username'];
 
                       // Inside the build method
-                            return Card(
-                                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                                child: Row(
+                      return Card(
+                        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                SizedBox(width: 8),
+                                CircleAvatar(
+                                  backgroundImage: imageURL != null ? NetworkImage(imageURL) : null,
+                                ),
+                                SizedBox(width: 8), // Add some space between the profile picture and the text
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                     CircleAvatar(
-                                        backgroundImage: imageURL != null ? NetworkImage(imageURL) : null,
-                                      ),
-                                    Expanded(
-                                      child: ListTile(
-                                        title: Text(username),
-                                        subtitle: Text(date),
-                                      ),
-                                    ),
-                                    AudioPlayerWidget(audioFilePath: audioFilePath),
+                                    Text(username),
                                   ],
                                 ),
-                              );
+                                SizedBox(width: 16),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(date, style: TextStyle(color: Colors.grey),),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                SizedBox(width: 8),
+                                Expanded(
+                                  child: AudioPlayerWidget(audioFilePath: audioFilePath),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                          ],
+                        ),
+                      );
                     },
                   );
                   },

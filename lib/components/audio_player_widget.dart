@@ -55,44 +55,47 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center, // Center contents horizontally
       children: [
-          Column(
-            children: [
-              LikeButton(isLiked: true, onTap: (){}),
-                Text("1"),
-            ],
-          ),
-              Slider(min: 0, max: duration.inSeconds.toDouble(),
-                  value: position.inSeconds.toDouble(), 
-                  onChanged: (value) async {
-                    final position = Duration(seconds: value.toInt());
-                    await audioPlayer.seek(position);
-                    await audioPlayer.resume();
-                  },
-                  ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: CircleAvatar(
-                  radius: 15,
-                  child: IconButton(
-                    icon: Icon(
-                      isPlaying ? Icons.pause : Icons.play_arrow,
-                    ),
-                    iconSize: 10,
-                    onPressed: () async {
-                      if (isPlaying) {
-                        audioPlayer.pause();
-                      } else {
-                        audioPlayer.setSourceUrl(widget.audioFilePath);
-                        audioPlayer.resume();
-                      }
-                      setState(() {
-                        isPlaying = !isPlaying;
-                      });
-                    },
-                  ),
-                ),
+        Column(
+          children: [
+            LikeButton(isLiked: true, onTap: (){}),
+            Text("1"),
+          ],
+        ),
+        Slider(
+          min: 0, 
+          max: duration.inSeconds.toDouble(),
+          value: position.inSeconds.toDouble(), 
+          onChanged: (value) async {
+            final position = Duration(seconds: value.toInt());
+            await audioPlayer.seek(position);
+            await audioPlayer.resume();
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: CircleAvatar(
+            radius: 15,
+            child: IconButton(
+              icon: Icon(
+                isPlaying ? Icons.pause : Icons.play_arrow,
               ),
+              iconSize: 10,
+              onPressed: () async {
+                if (isPlaying) {
+                  audioPlayer.pause();
+                } else {
+                  audioPlayer.setSourceUrl(widget.audioFilePath);
+                  audioPlayer.resume();
+                }
+                setState(() {
+                  isPlaying = !isPlaying;
+                });
+              },
+            ),
+          ),
+        ),
       ],
     );
   }
