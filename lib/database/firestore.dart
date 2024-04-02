@@ -66,7 +66,7 @@ class FirestoreDatabase{
 
   Future<int> getLikesCount(String postId) async {
     DocumentSnapshot postSnapshot = await FirebaseFirestore.instance.collection('Posts').doc(postId).get();
-    int likes = postSnapshot.get('likes') ?? 0;
+    int likes = postSnapshot.get('likes');
     return likes; 
   }
 }

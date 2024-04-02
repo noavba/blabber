@@ -25,6 +25,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   @override
   void initState() {
     super.initState();
+    fetchLikesCount();
     audioPlayer = AudioPlayer();
     audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
       if (state == PlayerState.completed) {
