@@ -1,11 +1,13 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:blabber/components/like_button.dart';
+import 'package:blabber/database/firestore.dart';
 import 'package:flutter/material.dart';
 
 class AudioPlayerWidget extends StatefulWidget {
   final String audioFilePath;
+  final String postID;
 
-  const AudioPlayerWidget({Key? key, required this.audioFilePath}) : super(key: key);
+  const AudioPlayerWidget({Key? key, required this.audioFilePath, required this.postID}) : super(key: key);
 
   @override
   _AudioPlayerWidgetState createState() => _AudioPlayerWidgetState();
@@ -16,6 +18,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   bool isPlaying = false;
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
+  final FirestoreDatabase database = FirestoreDatabase();
 
   @override
   void initState() {
@@ -45,6 +48,10 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       }
     });
   }
+  
+  void likePost() {
+    database.likePost(widget.postID);
+}
 
   @override
   void dispose() {
@@ -59,8 +66,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       children: [
         Column(
           children: [
-            LikeButton(isLiked: true, onTap: (){}),
-            Text("1"),
+            LikeButton(isLiked: true, onTap: likePost),
           ],
         ),
         Slider(

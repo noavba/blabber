@@ -225,7 +225,8 @@ class _HomeState extends State<Home> {
                       String audioFilePath = post['audioFileURL'];
                       String userEmail = post['userEmail'];
                       Timestamp timestamp = post['timestamp'];
-                      
+                      int likes = post['likes'] ?? 0;
+                      String postID = post['postID'];
                       String date = DateFormat('yyyy-MM-dd').format(timestamp.toDate());
 
 
@@ -274,7 +275,7 @@ class _HomeState extends State<Home> {
                               children: [
                                 SizedBox(width: 8),
                                 Expanded(
-                                  child: AudioPlayerWidget(audioFilePath: audioFilePath),
+                                  child: AudioPlayerWidget(audioFilePath: audioFilePath, postID: postID,),
                                 ),
                               ],
                             ),

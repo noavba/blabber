@@ -25,7 +25,7 @@ class FirestoreDatabase{
 
   //post a message
 
-  Future<Future<DocumentReference<Object?>>> addPost(String audioFileURL) async {
+  Future<DocumentReference<Object?>> addPost(String audioFileURL) async {
     // Upload audio file to Firebase Storage
     Reference storageRef = FirebaseStorage.instance
         .ref()
@@ -35,15 +35,24 @@ class FirestoreDatabase{
     TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
     String downloadURL = await snapshot.ref.getDownloadURL();
     
-    return posts.add({
+    DocumentReference postRef = await posts.add({
       'userEmail': user!.email,
       'timestamp': Timestamp.now(),
       'audioFileURL': downloadURL,
+      'likes': 0,
+      'postID': 'placeholder',
     });
+    await postRef.update({'postID': postRef.id});
+    return postRef;
   }
 
 
-  
+  //like post
+   Future<void> likePost(String postId) async {
+      await posts.doc(postId).update({
+        'likes': FieldValue.increment(1),
+      });
+    }
 
   //read posts froma  database
 

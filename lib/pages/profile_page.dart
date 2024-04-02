@@ -195,6 +195,7 @@ class _ProfileState extends State<Profile> {
                               // Get data for each post
                               String audioFilePath = post['audioFileURL'];
                               String userEmail = post['userEmail'];
+                              String postID = post['postID'];
                               // Convert timestamp to string
                               Timestamp timestamp = post['timestamp'];
                               String date = DateFormat('yyyy-MM-dd').format(timestamp.toDate());
@@ -222,7 +223,7 @@ class _ProfileState extends State<Profile> {
                               children: [
                                 SizedBox(width: 8),
                                 Expanded(
-                                  child: AudioPlayerWidget(audioFilePath: audioFilePath),
+                                  child: AudioPlayerWidget(audioFilePath: audioFilePath, postID: postID,),
                                 ),
                               ],
                             ),
