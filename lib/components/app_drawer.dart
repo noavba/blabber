@@ -55,18 +55,27 @@ class AppDrawer extends StatelessWidget{
 
                 //profile
                 Padding(
-                padding: const EdgeInsets.only(left: 25),
-                child: ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    color: Theme.of(context).colorScheme.inversePrimary,
-
-                  ),
-                  title: Text("Your Profile"),
-                  onTap: (){
+                  padding: const EdgeInsets.only(left: 25),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.person,
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                    ),
+                    title: Text("Your Profile"),
+                    onTap: () {
                       Navigator.pop(context); // Close the drawer
-                      Navigator.pushReplacementNamed(context, '/profile_page'); // Close the current page and push profile page
-                  }
+                      User? user = FirebaseAuth.instance.currentUser;
+                        // Check if the user is signed in
+                        if (user != null) {
+                          // Get the current user's email
+                          String currentUserEmail = user.email!;
+                      Navigator.pushReplacementNamed(
+                        context,
+                        '/profile_page',
+                        arguments: currentUserEmail, // Pass the relevant user's email as an argument
+                      );
+                    };
+                    },
                   ),
                 ),
 

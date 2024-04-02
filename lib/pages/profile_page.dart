@@ -10,14 +10,16 @@ import 'package:blabber/database/firestore.dart';
 import 'package:intl/intl.dart';
 
 class Profile extends StatefulWidget {
+  final String userEmail;
 
-  Profile({super.key});
+  const Profile({Key? key, required this.userEmail}) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
+  late Future<DocumentSnapshot<Map<String, dynamic>>> _userDetailsFuture; // Define _userDetailsFuture
     final FirestoreDatabase database = FirestoreDatabase();
 
       get postCounter => postCounter;
@@ -45,6 +47,8 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
+    // Get user details using the email passed as an argument
+    _userDetailsFuture = getUserDetails(widget.userEmail);
     // setAudio();
     // listen to audio player
     audioPlayer.onPlayerStateChanged.listen((state) {
@@ -79,24 +83,23 @@ class _ProfileState extends State<Profile> {
   }
 
 
-    // current logged in user
-    final User? currentUser = FirebaseAuth.instance.currentUser;
 
-    Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
-      return await FirebaseFirestore.instance.collection("Users").doc(currentUser!.email).get();
+
+    Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails(String userEmail) async {
+      return await FirebaseFirestore.instance.collection("Users").doc(userEmail).get();
     }
 
   @override
   Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: const Text('Your Profile'),
+      title: const Text('Profile'),
       backgroundColor: Theme.of(context).colorScheme.inversePrimary,
 
     ),
     drawer: AppDrawer(),
     body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-      future: getUserDetails(),
+      future: _userDetailsFuture,
       builder: (context, snapshot) {
         //loading
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -114,7 +117,7 @@ class _ProfileState extends State<Profile> {
 
           return Column(
             children: [
-              Expanded(flex: 2, child: _TopPortion()),
+              Expanded(flex: 2, child: _TopPortion(userEmail: userEmail)),
               Expanded(
                 flex: 3,
                 child: Padding(
@@ -314,8 +317,10 @@ class ProfileInfoItem {
 }
 
 class _TopPortion extends StatelessWidget {
-   _TopPortion({Key? key}) : super(key: key);
-  final User? currentUser = FirebaseAuth.instance.currentUser;
+final String userEmail;
+
+  const _TopPortion({Key? key, required this.userEmail}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -340,7 +345,7 @@ class _TopPortion extends StatelessWidget {
               fit: StackFit.expand,
                 children: [
                       StreamBuilder<DocumentSnapshot>(
-                        stream: FirebaseFirestore.instance.collection('Users').doc(currentUser!.email).snapshots(),
+                        stream: FirebaseFirestore.instance.collection('Users').doc(userEmail).snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
                             return CircularProgressIndicator(); // Show a loading indicator while data is loading
@@ -348,7 +353,6 @@ class _TopPortion extends StatelessWidget {
 
                           var userData = snapshot.data!.data() as Map<String, dynamic>;
                           var imageURL = userData['pfp'];
-                          var username = userData['username'];
 
                           return Container(
                             decoration: BoxDecoration(
