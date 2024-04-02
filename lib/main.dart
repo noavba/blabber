@@ -23,10 +23,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  
+  const MyApp({Key? key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,11 +37,16 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login_or_register': (context) => const LoginOrRegisterPage(),
         '/home_page': (context) => Home(),
-        '/profile_page': (context) => Profile(),
+        '/profile_page': (context) {
+          // Retrieve the userEmail from the arguments passed during navigation
+          final String userEmail = ModalRoute.of(context)!.settings.arguments as String;
+
+          // Return Profile widget with userEmail passed as an argument
+          return Profile(userEmail: userEmail);
+        },
         '/auth_page': (context) => AuthPage(),
         '/profile_settings_page': (context) => const ProfileSettingsPage(),
-        
-      }
+      },
     );
   }
 }

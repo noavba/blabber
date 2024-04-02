@@ -247,27 +247,38 @@ class _HomeState extends State<Home> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 8),
-                            Row(
-                              children: [
-                                SizedBox(width: 8),
-                                CircleAvatar(
-                                  backgroundImage: imageURL != null ? NetworkImage(imageURL) : null,
-                                ),
-                                SizedBox(width: 8), // Add some space between the profile picture and the text
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(username),
-                                  ],
-                                ),
-                                SizedBox(width: 16),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(date, style: TextStyle(color: Colors.grey),),
-                                  ],
-                                ),
-                              ],
+                            GestureDetector(
+                              onTap: () {
+                                    
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  '/profile_page',
+                                  arguments: userEmail, // Pass the relevant user's email as an argument
+                                );
+
+                              },
+                              child: Row(
+                                children: [
+                                  SizedBox(width: 8),
+                                  CircleAvatar(
+                                    backgroundImage: imageURL != null ? NetworkImage(imageURL) : null,
+                                  ),
+                                  SizedBox(width: 8), // Add some space between the profile picture and the text
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(username),
+                                    ],
+                                  ),
+                                  SizedBox(width: 16),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(date, style: TextStyle(color: Colors.grey),),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 8),
                             Row(
