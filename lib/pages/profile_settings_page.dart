@@ -59,7 +59,18 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 child: ElevatedButton(
                   child: const Text("Return to Profile"),
                   onPressed: (){
-                    Navigator.pushReplacementNamed(context, '/profile_page');
+                    Navigator.pop(context); // Close the drawer
+                      User? user = FirebaseAuth.instance.currentUser;
+                        // Check if the user is signed in
+                        if (user != null) {
+                          // Get the current user's email
+                          String currentUserEmail = user.email!;
+                      Navigator.pushReplacementNamed(
+                        context,
+                        '/profile_page',
+                        arguments: currentUserEmail, // Pass the relevant user's email as an argument
+                      );
+                        }
                   } ,
                 ),
               ),
