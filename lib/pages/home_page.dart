@@ -195,8 +195,8 @@ class _HomeState extends State<Home> {
             builder: (context, snapshot) {
               //show loading circle
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
+                return const Center(
+                 child: CircularProgressIndicator(),
                 );
               }
               //get all posts
@@ -233,7 +233,7 @@ class _HomeState extends State<Home> {
                             return StreamBuilder<DocumentSnapshot>(
                               stream: FirebaseFirestore.instance.collection('Users').doc(userEmail).snapshots(),
                               builder: (context, snapshot) {
-                                if (!snapshot.hasData) {
+                                if (!snapshot.hasData || snapshot.data == null) {
                                   return CircularProgressIndicator(); // Show a loading indicator while data is loading
                             }
                             var userData = snapshot.data!.data() as Map<String, dynamic>;
