@@ -8,6 +8,7 @@ import 'package:blabber/components/app_drawer.dart';
 import 'package:blabber/components/post_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 
@@ -41,7 +42,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     initRecorder();
-    setAudio();
+   // setAudio();
     // listen to audio player
     audioPlayer.onPlayerStateChanged.listen((state) {
       if (mounted) {
@@ -68,9 +69,10 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Future setAudio() async {
-    audioPlayer.setSourceUrl("https://audio.jukehost.co.uk/mcKzeq26vX12fLheAkLamTmbrkVDlBYX");
-  }
+  //Future setAudio() async {
+    //audioPlayer.setReleaseMode(ReleaseMode.loop);
+
+  //}
   @override
   void dispose(){
     audioPlayer.dispose();
@@ -92,12 +94,17 @@ class _HomeState extends State<Home> {
   //recording start
   Future record() async {
     if (!isRecorderReady) return;
-    await recorder.startRecorder(toFile: 'audio');
+      String path = await getTemporaryDirectory().then((dir) => dir.path);
+      String filePath = '$path/audio.aac';
+    await recorder.startRecorder(toFile: filePath);
   }
   //recording end
   Future stop() async {
     if(!isRecorderReady) return;
     await recorder.stopRecorder();
+      String path = await getTemporaryDirectory().then((dir) => dir.path);
+      String filePath = '$path/audio.aac';
+      audioPlayer.setSourceDeviceFile(filePath);
   }
 
   //post message
