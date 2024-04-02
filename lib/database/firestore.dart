@@ -52,6 +52,7 @@ class FirestoreDatabase{
       await posts.doc(postId).update({
         'likes': FieldValue.increment(1),
       });
+      getLikesCount(postId);
     }
 
   //read posts froma  database
@@ -61,5 +62,11 @@ class FirestoreDatabase{
       .orderBy('timestamp', descending: true)
       .snapshots();
     return postsStream;
+  }
+
+  Future<int> getLikesCount(String postId) async {
+    DocumentSnapshot postSnapshot = await FirebaseFirestore.instance.collection('Posts').doc(postId).get();
+    int likes = postSnapshot.get('likes') ?? 0;
+    return likes; 
   }
 }

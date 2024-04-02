@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class AudioPlayerWidget extends StatefulWidget {
   final String audioFilePath;
   final String postID;
+  
 
   const AudioPlayerWidget({Key? key, required this.audioFilePath, required this.postID}) : super(key: key);
 
@@ -18,6 +19,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   bool isPlaying = false;
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
+  int likesCount = 0;
   final FirestoreDatabase database = FirestoreDatabase();
 
   @override
@@ -51,6 +53,14 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   
   void likePost() {
     database.likePost(widget.postID);
+    fetchLikesCount();
+  }
+  void fetchLikesCount() async {
+  // Assuming you have a method in your FirestoreDatabase class to fetch likes count
+  int count = await FirestoreDatabase().getLikesCount(widget.postID);
+  setState(() {
+    likesCount = count;
+  });
 }
 
   @override
@@ -66,7 +76,8 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       children: [
         Column(
           children: [
-            LikeButton(isLiked: true, onTap: likePost),
+            LikeButton(isLiked: false, onTap: likePost),
+            Text(likesCount.toString()), //display like count
           ],
         ),
         Slider(
