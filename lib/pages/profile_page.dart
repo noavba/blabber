@@ -200,19 +200,36 @@ class _ProfileState extends State<Profile> {
                               String date = DateFormat('yyyy-MM-dd').format(timestamp.toDate());
 
                               // Return as a list tile
-                              return Card(
-                                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                                child: Row(
+                        return Card(
+                        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 8),
+                            Row(
+                              children: [ // Add some space between the profile picture and the text
+                                SizedBox(width: 8),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Expanded(
-                                      child: ListTile(
-                                        title: Text(date),
-                                      ),
-                                    ),
-                                    AudioPlayerWidget(audioFilePath: audioFilePath),
+                                    Text(date, style: TextStyle(color: Colors.grey),),
                                   ],
                                 ),
-                              );
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                SizedBox(width: 8),
+                                Expanded(
+                                  child: AudioPlayerWidget(audioFilePath: audioFilePath),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                          ],
+                        ),
+                      );
                             },
                           ),
                         );
