@@ -42,6 +42,9 @@ class FirestoreDatabase{
     });
   }
 
+
+  
+
   //read posts froma  database
 
   Stream<QuerySnapshot> getPostsStream(){

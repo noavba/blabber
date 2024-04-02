@@ -206,8 +206,7 @@ class _ProfileState extends State<Profile> {
                                   children: [
                                     Expanded(
                                       child: ListTile(
-                                        title: Text(userEmail),
-                                        subtitle: Text(date),
+                                        title: Text(date),
                                       ),
                                     ),
                                     AudioPlayerWidget(audioFilePath: audioFilePath),
@@ -331,6 +330,7 @@ class _TopPortion extends StatelessWidget {
 
                           var userData = snapshot.data!.data() as Map<String, dynamic>;
                           var imageURL = userData['pfp'];
+                          var username = userData['username'];
 
                           return Container(
                             decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:blabber/components/like_button.dart';
 import 'package:flutter/material.dart';
 
 class AudioPlayerWidget extends StatefulWidget {
@@ -55,7 +56,13 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Slider(min: 0, max: duration.inSeconds.toDouble(),
+          Column(
+            children: [
+              LikeButton(isLiked: true, onTap: (){}),
+                Text("1"),
+            ],
+          ),
+              Slider(min: 0, max: duration.inSeconds.toDouble(),
                   value: position.inSeconds.toDouble(), 
                   onChanged: (value) async {
                     final position = Duration(seconds: value.toInt());

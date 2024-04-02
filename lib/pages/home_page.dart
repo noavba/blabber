@@ -29,6 +29,7 @@ class _HomeState extends State<Home> {
   final audioPlayer = AudioPlayer();
   bool isRecorderReady = false;
   bool isPlaying = false;
+
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
   //map to hold all the different audio players
@@ -224,6 +225,7 @@ class _HomeState extends State<Home> {
                       String audioFilePath = post['audioFileURL'];
                       String userEmail = post['userEmail'];
                       Timestamp timestamp = post['timestamp'];
+                      
                       String date = DateFormat('yyyy-MM-dd').format(timestamp.toDate());
 
 
