@@ -74,13 +74,9 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            const Text("Blabber",
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 30 ),
-              ),
-              const SizedBox(height: 20),
-          
-            const Text("Temporary Login Screen",
-              style:TextStyle(color: Colors.white),
+            const SizedBox(height: 50),
+            const Text("B!@6beR",
+              style: TextStyle(color: Color.fromARGB(255, 249, 28, 31), fontWeight: FontWeight.w800, fontSize: 30 ),
               ),
             
             const SizedBox(height: 50),
@@ -110,8 +106,8 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    'place holder - Forgot Password?',
-                    style: TextStyle(color: Colors.white),
+                    'Forgot Password?',
+                    style: TextStyle(color: Color.fromARGB(255, 249, 226, 30)),
                     ),
                 ],
               ),
@@ -142,9 +138,9 @@ class _LoginPageState extends State<LoginPage> {
               GestureDetector(
                 onTap: widget.onTap,
                   child: const Text(
-                  ' Place holder - Register Now!',
+                  'Register Now!',
                   style: TextStyle(
-                    color: Colors.blue, fontWeight: FontWeight.bold),
+                    color: Color.fromARGB(255, 249, 226, 30), fontWeight: FontWeight.bold),
                 ),
               ),
             ],

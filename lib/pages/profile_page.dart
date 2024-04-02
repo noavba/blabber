@@ -192,7 +192,7 @@ class _ProfileInfoRow extends StatelessWidget {
 
 
   final List<ProfileInfoItem> _items = const [
-    ProfileInfoItem("Blabbers", 0),
+    ProfileInfoItem("B!@6beRs", 0),
     ProfileInfoItem("Followers", 0),
     ProfileInfoItem("Friends", 0),
   ];

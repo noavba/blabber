@@ -27,7 +27,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('Home Settings'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         elevation: 0,
       ),
@@ -42,19 +42,17 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 border: Border.all(color: Colors.black)
               ),
               padding: EdgeInsets.all(25),
-              child: Text("Click the button below to upload a new PFP!"),
+              child: Text("No Profile Picture selected"),
             ),
             Container(
               padding: EdgeInsets.all(15),
               child: ElevatedButton(
-                child: const Text ("Image from Camera Roll"),
+                child: const Text ("View Camera Roll"),
                 onPressed: (){
                   _pickImageFromGallery();
                 },
               ),
               ),
-              const Text("TEMPORARY NO SUBMIT BUTTON? WHAT IS GOOD UI DESIGN LOL?"),
-              const SizedBox(height: 20),
 
               Container(
                 padding: EdgeInsets.all(50),

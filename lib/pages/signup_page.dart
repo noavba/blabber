@@ -95,15 +95,11 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            const Text("Blabber",
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 30 ),
+            const SizedBox(height: 50),
+            const Text("B!@6beR",
+              style: TextStyle(color: Color.fromARGB(255, 249, 28, 31), fontWeight: FontWeight.w800, fontSize: 30 ),
               ),
-              const SizedBox(height: 20),
-          
-            const Text("Temporary Register Screen",
-              style:TextStyle(color: Colors.white),
-              ),
-            
+              
             const SizedBox(height: 50),
           
             //email textfield
@@ -168,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Text(
                   ' Sign in',
                   style: TextStyle(
-                    color: Colors.blue, fontWeight: FontWeight.bold),
+                    color: const Color.fromARGB(255, 249, 226, 30), fontWeight: FontWeight.bold),
                   ),
               ),
             ],
