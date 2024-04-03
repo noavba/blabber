@@ -20,12 +20,14 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
   int likesCount = 0;
+  bool isLiked = false;
   final FirestoreDatabase database = FirestoreDatabase();
 
   @override
   void initState() {
     super.initState();
     fetchLikesCount();
+    checkIfPostLiked();
     audioPlayer = AudioPlayer();
     audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
       if (state == PlayerState.completed) {
@@ -53,9 +55,27 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   }
   
   void likePost() {
-    database.likePost(widget.postID);
-    fetchLikesCount();
+    if(!isLiked){
+      database.likePost(widget.postID).then((_){
+
+
+      fetchLikesCount();
+      if(mounted){
+        setState((){
+          isLiked = true;
+        });
+      }
+      });
+    } 
   }
+  void checkIfPostLiked() async {
+    bool liked = await database.checkIfPostLiked(widget.postID);
+    if (mounted) {
+      setState(() {
+        isLiked = liked;
+      });
+    }
+}
   void fetchLikesCount() async {
   // Assuming you have a method in your FirestoreDatabase class to fetch likes count
   int count = await FirestoreDatabase().getLikesCount(widget.postID);
@@ -64,8 +84,8 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       likesCount = count;
     });
   }
-}
-
+  }
+ 
   @override
   void dispose() {
     audioPlayer.dispose();
@@ -79,7 +99,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       children: [
         Column(
           children: [
-            LikeButton(isLiked: false, onTap: likePost),
+            LikeButton(isLiked: isLiked, onTap: likePost),
             Text(likesCount.toString()), //display like count
           ],
         ),

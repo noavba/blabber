@@ -41,6 +41,7 @@ class FirestoreDatabase{
       'audioFileURL': downloadURL,
       'likes': 0,
       'postID': 'placeholder',
+      'likedBy': [],
     });
     await postRef.update({'postID': postRef.id});
     return postRef;
@@ -49,11 +50,29 @@ class FirestoreDatabase{
 
   //like post
    Future<void> likePost(String postId) async {
+    var userId = FirebaseAuth.instance.currentUser!.email;
+    DocumentSnapshot postSnapshot = await posts.doc(postId).get();
+    List<dynamic> likedBy = postSnapshot.get('likedBy') ?? [];
+    if (!likedBy.contains(userId)) {
+      likedBy.add(userId.toString());
       await posts.doc(postId).update({
         'likes': FieldValue.increment(1),
+        'likedBy': likedBy,
       });
-      getLikesCount(postId);
+    } else {
+      print('Post is already liked by the user');
     }
+    getLikesCount(postId);
+}
+
+
+
+    Future<bool> checkIfPostLiked(String postId) async {
+      var userId = FirebaseAuth.instance.currentUser!.email;
+      DocumentSnapshot postSnapshot = await posts.doc(postId).get();
+      List<dynamic> likedBy = postSnapshot.get('likedBy') ?? [];
+      return likedBy.contains(userId.toString());
+      }
 
   //read posts froma  database
 

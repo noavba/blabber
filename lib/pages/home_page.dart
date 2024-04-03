@@ -229,7 +229,7 @@ class _HomeState extends State<Home> {
                       int likes = post['likes'] ?? 0;
                       String postID = post['postID'];
                       String date = DateFormat('yyyy-MM-dd').format(timestamp.toDate());
-
+                      
 
                       //return as a list tile
                             return StreamBuilder<DocumentSnapshot>(
