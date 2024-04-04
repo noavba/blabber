@@ -87,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 41, 44, 46),
+      backgroundColor: const Color.fromARGB(255, 41, 44, 46),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -152,17 +152,17 @@ class _RegisterPageState extends State<RegisterPage> {
              Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text('Already a member?',
+              const Text('Already a member?',
                 style: TextStyle(
                   color: Colors.white),
                 ),
-              SizedBox(width:4),
+              const SizedBox(width:4),
               GestureDetector(
                 onTap: widget.onTap,
-                child: Text(
+                child: const Text(
                   ' Sign in',
                   style: TextStyle( // button to switch back to the regular log in page
-                    color: const Color.fromARGB(255, 249, 226, 30), fontWeight: FontWeight.bold),
+                    color: Color.fromARGB(255, 249, 226, 30), fontWeight: FontWeight.bold),
                   ),
               ),
             ],

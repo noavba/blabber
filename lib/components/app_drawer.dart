@@ -22,7 +22,7 @@ class AppDrawer extends StatelessWidget{
       backgroundColor: Theme.of(context).colorScheme.background,
       child: Column(
         children:[
-            DrawerHeader(
+            const DrawerHeader(
               child: Image(image: AssetImage('lib/assets/blabber.png')),
               ),
 
@@ -36,7 +36,7 @@ class AppDrawer extends StatelessWidget{
                     color: Theme.of(context).colorScheme.inversePrimary,
 
                   ),
-                  title: Text("Home Page"),
+                  title: const Text("Home Page"),
                   onTap: (){
                     
                       Navigator.pop(context); // Close the drawer
@@ -55,7 +55,7 @@ class AppDrawer extends StatelessWidget{
                       Icons.person,
                       color: Theme.of(context).colorScheme.inversePrimary,
                     ),
-                    title: Text("Your Profile"),
+                    title: const Text("Your Profile"),
                     onTap: () {
                       Navigator.pop(context); // Close the drawer
                       User? user = FirebaseAuth.instance.currentUser;
@@ -84,7 +84,7 @@ class AppDrawer extends StatelessWidget{
                     color: Theme.of(context).colorScheme.inversePrimary,
 
                   ),
-                  title: Text("Settings"),
+                  title: const Text("Settings"),
                   onTap: (){
                   }
                   ),
@@ -99,7 +99,7 @@ class AppDrawer extends StatelessWidget{
                       color: Theme.of(context).colorScheme.inversePrimary,
 
                     ),
-                    title: Text("Log Out"),
+                    title: const Text("Log Out"),
                     onTap: (){
                       signUserOut(context);
                     }

@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
       showDialog(
         context: context,
         builder:(context){
-          return AlertDialog(
+          return const AlertDialog(
             title: Text("Invalid Email/Password"),
           );
       },
@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 41, 44, 46),
+      backgroundColor: const Color.fromARGB(255, 41, 44, 46),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -127,11 +127,11 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-              Text('Not a member?',
+              const Text('Not a member?',
                 style: TextStyle(
                   color: Colors.white),
                 ),
-              SizedBox(width:4),
+              const SizedBox(width:4),
               GestureDetector(
                 onTap: widget.onTap,
                   child: const Text(

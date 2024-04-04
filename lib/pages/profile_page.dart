@@ -134,7 +134,7 @@ Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails(String userEmail) 
                             },
                             heroTag: 'edit',
                             elevation: 0,
-                            backgroundColor: Color.fromARGB(255, 230, 230, 230),
+                            backgroundColor: const Color.fromARGB(255, 230, 230, 230),
                             label: const Text("Settings", style: TextStyle(color: Colors.black)),
                             icon: const Icon(Icons.settings, color: Colors.black),
                           ),
@@ -143,7 +143,7 @@ Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails(String userEmail) 
                             onPressed: () {},
                             heroTag: 'follow',
                             elevation: 0,
-                            backgroundColor: Color.fromARGB(255, 249, 28, 31),
+                            backgroundColor: const Color.fromARGB(255, 249, 28, 31),
                             label: const Text("Follow", style: TextStyle(color: Colors.white)),
                             icon: const Icon(Icons.alternate_email, color: Colors.white),
                           ),
@@ -152,7 +152,7 @@ Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails(String userEmail) 
                             onPressed: () {},
                             heroTag: 'friend',
                             elevation: 0,
-                            backgroundColor: Color.fromARGB(255, 249, 226, 30),
+                            backgroundColor: const Color.fromARGB(255, 249, 226, 30),
                             label: const Text("Friend", style: TextStyle(color: Colors.black)),
                             icon: const Icon(Icons.group_add, color: Colors.black),
                           ),
@@ -165,14 +165,14 @@ Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails(String userEmail) 
                       builder: (context, snapshot) {
                         // Show loading circle
                         if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(
+                          return const Center(
                             child: Text("WAITING ON CONNECTION!"),
                           );
                         }
                         final posts = snapshot.data!.docs.where((post) => post['userEmail'] == userEmail).toList();
 
                         if (snapshot.data == null || posts.isEmpty) {
-                          return _ProfileInfoRow(numberOfBlabs: 0);
+                          return const _ProfileInfoRow(numberOfBlabs: 0);
                         }
                         else {
                           return _ProfileInfoRow(numberOfBlabs: posts.length);
@@ -186,7 +186,7 @@ Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails(String userEmail) 
                       builder: (context, snapshot) {
                         // Show loading circle
                         if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(
+                          return const Center(
                             child: Text("WAITING ON CONNECTION!"),
                           );
                         }
@@ -219,32 +219,32 @@ Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails(String userEmail) 
 
                               // Return as a list tile
                         return Card(
-                        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Row(
                               children: [ // Add some space between the profile picture and the text
-                                SizedBox(width: 8),
+                                const SizedBox(width: 8),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(date, style: TextStyle(color: Colors.grey),),
+                                    Text(date, style: const TextStyle(color: Colors.grey),),
                                   ],
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Row(
                               children: [
-                                SizedBox(width: 8),
+                                const SizedBox(width: 8),
                                 Expanded(
                                   child: AudioPlayerWidget(audioFilePath: audioFilePath, postID: postID,),
                                 ),
                               ],
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                           ],
                         ),
                       );
@@ -261,7 +261,7 @@ Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails(String userEmail) 
             ],
           );
         } else {
-          return Text("No data");
+          return const Text("No data");
         }
       },
     ),
@@ -280,8 +280,8 @@ class _ProfileInfoRow extends StatelessWidget { // builds the B!@6s counter, the
   Widget build(BuildContext context) {
     final List<ProfileInfoItem> _items = [
       ProfileInfoItem("B!@6s", numberOfBlabs), // passed as a variable from a previous calculation
-      ProfileInfoItem("Followers", 0),
-      ProfileInfoItem("Friends", 0),
+      const ProfileInfoItem("Followers", 0),
+      const ProfileInfoItem("Friends", 0),
     ];
 
     return Container(
@@ -363,7 +363,7 @@ final String userEmail;
                         stream: FirebaseFirestore.instance.collection('Users').doc(userEmail).snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
-                            return Text("Waiting on Connection");
+                            return const Text("Waiting on Connection");
                           }
 
                           var userData = snapshot.data!.data() as Map<String, dynamic>;

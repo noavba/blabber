@@ -98,7 +98,7 @@ class _PostViewState extends State<PostView> {
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.data == null) {
                 // Show a message if the post is not found
-                return Text("Post not found"); 
+                return const Text("Post not found"); 
               }
 
               // Get the post data
@@ -112,18 +112,18 @@ class _PostViewState extends State<PostView> {
                 stream: FirebaseFirestore.instance.collection('Users').doc(userEmail).snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData || snapshot.data == null) {
-                    return CircularProgressIndicator(); // Show a loading indicator while data is loading
+                    return const CircularProgressIndicator(); // Show a loading indicator while data is loading
               }
               var userData = snapshot.data!.data() as Map<String, dynamic>;
               var imageURL = userData['pfp'];
               var username = userData['username'];
             
               return Card(
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushReplacementNamed(
@@ -134,37 +134,37 @@ class _PostViewState extends State<PostView> {
                       },
                       child: Row(
                         children: [
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           CircleAvatar(
                             backgroundImage: imageURL != null ? NetworkImage(imageURL) : null,
                           ),
-                          SizedBox(width: 8), // Add some space between the profile picture and the text
+                          const SizedBox(width: 8), // Add some space between the profile picture and the text
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(username),
                             ],
                           ),
-                          SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text(date, style: TextStyle(color: Colors.grey),),
+                              Text(date, style: const TextStyle(color: Colors.grey),),
                             ],
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Row(
                       children: [
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: AudioPlayerWidget(audioFilePath: audioFilePath, postID: widget.postID),
                         ),
                       ],
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                   ],
                 ),
               );
@@ -175,7 +175,7 @@ class _PostViewState extends State<PostView> {
             padding: const EdgeInsets.all(15.0),
             child: Row(
               children: [
-                ElevatedButton(child: Icon(
+                ElevatedButton(child: const Icon(
                   Icons.mic, size: 40,
 
                 ),
