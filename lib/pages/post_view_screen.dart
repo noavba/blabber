@@ -1,20 +1,10 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:blabber/components/audio_player_widget.dart';
-import 'package:blabber/components/my_text_field.dart';
 import 'package:blabber/database/firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:blabber/pages/auth_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:blabber/components/app_drawer.dart';
-import 'package:blabber/components/post_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-
-
 
 class PostView extends StatefulWidget {
   PostView({super.key, required this.postID});

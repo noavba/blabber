@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:blabber/pages/home_page.dart';
-import 'package:blabber/pages/profile_page.dart';
-
-
-
 
 class AppDrawer extends StatelessWidget{
 

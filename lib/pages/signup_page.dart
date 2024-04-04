@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:blabber/components/my_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:blabber/components/register_button.dart';
-import 'login_page.dart';
-
-
-
 
 class RegisterPage extends StatefulWidget{
   final  Function()? onTap;  

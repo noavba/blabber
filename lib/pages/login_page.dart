@@ -1,10 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:blabber/components/my_text_field.dart';
 import 'package:blabber/components/login_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-
 
 class LoginPage extends StatefulWidget{
   final  Function()? onTap;

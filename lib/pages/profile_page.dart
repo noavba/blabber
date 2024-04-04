@@ -2,10 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:blabber/components/audio_player_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:blabber/pages/auth_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:blabber/components/app_drawer.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:blabber/database/firestore.dart';
 import 'package:intl/intl.dart';
 

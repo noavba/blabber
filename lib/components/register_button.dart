@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:blabber/pages/signup_page.dart';
 
 class RegisterButton extends StatelessWidget{
 
