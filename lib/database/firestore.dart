@@ -75,7 +75,7 @@ class FirestoreDatabase{
 
 
     Future<bool> checkIfPostLiked(String postId) async {
-      var userId = FirebaseAuth.instance.currentUser!.email;
+      var userId = FirebaseAuth.instance.currentUser?.email;
       DocumentSnapshot postSnapshot = await posts.doc(postId).get();
       List<dynamic> likedBy = postSnapshot.get('likedBy') ?? [];
       return likedBy.contains(userId.toString());
