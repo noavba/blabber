@@ -25,8 +25,9 @@ class PostView extends StatefulWidget {
 
 class _PostViewState extends State<PostView> {
   void Function()? onTap;
+  //initalize audioplayer
   final audioPlayer = AudioPlayer();
-  bool isRecorderReady = false;
+
   bool isPlaying = false;
 
   Duration duration = Duration.zero;
@@ -48,7 +49,6 @@ class _PostViewState extends State<PostView> {
   @override
   void initState() {
     super.initState();
-    initRecorder();
     // setAudio();
     // listen to audio player
     audioPlayer.onPlayerStateChanged.listen((state) {
@@ -58,7 +58,7 @@ class _PostViewState extends State<PostView> {
         });
       }
     });
-    // listen to audio duration
+    // listen to audio duration (slider)
     audioPlayer.onDurationChanged.listen((newDuration) {
       if (mounted) {
         setState(() {
@@ -76,25 +76,13 @@ class _PostViewState extends State<PostView> {
     });
   }
 
-  //Future setAudio() async {
-    //audioPlayer.setReleaseMode(ReleaseMode.loop);
 
-  //}
   @override
   void dispose(){
     audioPlayer.dispose();
     super.dispose();
   }
 
-  Future initRecorder() async{
-    final status = await Permission.microphone.request();
-
-    if(status != PermissionStatus.granted){
-      throw "error";
-    }
-
-  }
-  //recording start
     
 
   
@@ -114,11 +102,13 @@ class _PostViewState extends State<PostView> {
           StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection('Posts')
-                .doc(widget.postID) // Use widget.postID to get the specific post
+                // Use widget.postID to get the specific post
+                .doc(widget.postID) 
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.data == null) {
-                return Text("Post not found"); // Show a message if the post is not found
+                // Show a message if the post is not found
+                return Text("Post not found"); 
               }
 
               // Get the post data

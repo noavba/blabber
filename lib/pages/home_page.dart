@@ -25,6 +25,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   void Function()? onTap;
+  //initalize recorder and audio player
   final recorder = FlutterSoundRecorder();
   final audioPlayer = AudioPlayer();
   bool isRecorderReady = false;
@@ -32,12 +33,10 @@ class _HomeState extends State<Home> {
 
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
-  //map to hold all the different audio players
 
   //firestore access
   final FirestoreDatabase database = FirestoreDatabase();
 
-  TextEditingController newPostController = TextEditingController();
 
   void _setStateIfMounted(VoidCallback fn) {
     if (mounted) {
@@ -77,10 +76,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-  //Future setAudio() async {
-    //audioPlayer.setReleaseMode(ReleaseMode.loop);
 
-  //}
   @override
   void dispose(){
     audioPlayer.dispose();
@@ -102,6 +98,7 @@ class _HomeState extends State<Home> {
   //recording start
   Future record() async {
     if (!isRecorderReady) return;
+      //creates temporary directory to store the recorded audio in
       String path = await getTemporaryDirectory().then((dir) => dir.path);
       String filePath = '$path/audio.aac';
     await recorder.startRecorder(toFile: filePath);
@@ -154,11 +151,7 @@ class _HomeState extends State<Home> {
                   setState((){});
                 },
                 ),
-                //Expanded(
-                  //child: MyTextField(controller: newPostController, hintText: "BLAB!!", obscureText: false)
-                  //),
-                  //PostButton(onTap: postMessage,
-                  //),
+                  //slider to show audio duration (UI)
                   Slider(min: 0, max: 15,
                   value: position.inSeconds.toDouble(), onChanged: (value) async {
                     final position = Duration(seconds: value.toInt());
@@ -167,6 +160,7 @@ class _HomeState extends State<Home> {
                     await audioPlayer.resume();
                   },
                   ),
+                  //shows the buttons
                   CircleAvatar(
                     radius: 20,
                     child: IconButton(icon: Icon(
@@ -191,6 +185,7 @@ class _HomeState extends State<Home> {
 
             ),
           ),
+          //building all the posts from the getstreams method
           StreamBuilder(
             stream: database.getPostsStream(),
             builder: (context, snapshot) {
@@ -242,7 +237,7 @@ class _HomeState extends State<Home> {
                             var imageURL = userData['pfp'];
                             var username = userData['username'];
 
-                      // Inside the build method
+                      // return a card for each post that holds the data for each post
                       return Card(
                         margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                         child: Column(

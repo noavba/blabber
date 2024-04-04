@@ -36,6 +36,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const AuthPage(),
       routes: {
+        //these are the routes for the file. all we have to do is call one of them usiung the Navigator class and
+        //it will push it into view. It's like a stack though so we have to remember that it stacks infinitely if we don't pop the current "context",
+        //
         '/login_or_register': (context) => const LoginOrRegisterPage(),
         '/home_page': (context) => Home(),
         '/profile_page': (context) {

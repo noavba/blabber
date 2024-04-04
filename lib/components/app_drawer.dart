@@ -14,13 +14,11 @@ class AppDrawer extends StatelessWidget{
 
   
 
-    // THIS IS REALLY GROSS NAVIGATION WE ARE GOING TO SWAP IT LATER
-    //I CBA TO DEAL WIHT THIS ANY TIME SOON DISGUSTING ANDROIDS
-
-  //im goignt o fucking scream
+  //this handles all navigation through the app bar    
+  //im going to  scream
     void signUserOut(context) async {
       await FirebaseAuth.instance.signOut();
-      Navigator.popAndPushNamed(context, '/login_or_register'); // Example route to navigate to after signout
+      Navigator.popAndPushNamed(context, '/login_or_register'); 
     }
 
   @override 
@@ -45,6 +43,7 @@ class AppDrawer extends StatelessWidget{
                   ),
                   title: Text("Home Page"),
                   onTap: (){
+                    
                       Navigator.pop(context); // Close the drawer
                       Navigator.pushReplacementNamed(context, '/home_page'); // Close the current page and push home page
                   }

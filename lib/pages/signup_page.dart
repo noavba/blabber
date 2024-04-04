@@ -64,7 +64,9 @@ class _RegisterPageState extends State<RegisterPage> {
       showErrorMessage(e.code);
     }
   }
-
+  //this creates the user itself when you create an account
+  //it sets the email and username and uploads it to firebase
+  //default pfp can be changed here as well.
   Future<void> createUserDocument(UserCredential? userCredential) async {
     if(userCredential != null && userCredential.user != null){
       await FirebaseFirestore.instance.collection("Users").doc(userCredential.user!.email).set({

@@ -24,10 +24,12 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   final FirestoreDatabase database = FirestoreDatabase();
 
   @override
+  //when loaded run all these functions
   void initState() {
     super.initState();
     fetchLikesCount();
     checkIfPostLiked();
+    //slider duration keeping track
     audioPlayer = AudioPlayer();
     audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
       if (state == PlayerState.completed) {
@@ -54,11 +56,13 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     });
   }
   
+  //like post 
+  //can only like if its not liked already
+  //if liked, then wait a second then grab all liked posts (if it tries to do it all at once then it wont work) (thats what .then(_)) does
+  
   void likePost() {
     if(!isLiked){
       database.likePost(widget.postID).then((_){
-
-
       fetchLikesCount();
       if(mounted){
         setState((){
@@ -68,6 +72,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       });
     } 
   }
+  //uses check method to return if its liked or not. if it is liked then set to liked.
   void checkIfPostLiked() async {
     bool liked = await database.checkIfPostLiked(widget.postID);
     if (mounted) {
@@ -77,7 +82,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     }
 }
   void fetchLikesCount() async {
-  // Assuming you have a method in your FirestoreDatabase class to fetch likes count
+  //sets a local variable in the file to the likes count from firebase
   int count = await FirestoreDatabase().getLikesCount(widget.postID);
   if(mounted){
     setState(() {
@@ -138,13 +143,16 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
             radius: 15,
             child: IconButton(
               icon: Icon(
+                //if its playing, make the icon a pause, if not then make it an arrow
                 isPlaying ? Icons.pause : Icons.play_arrow,
               ),
               iconSize: 10,
               onPressed: () async {
                 if (isPlaying) {
+                  //pressing the icon changes it to paused if playing
                   audioPlayer.pause();
                 } else {
+                  //pressing icon sets source to the widget audio path
                   audioPlayer.setSourceUrl(widget.audioFilePath);
                   audioPlayer.resume();
                 }

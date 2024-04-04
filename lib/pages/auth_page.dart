@@ -17,7 +17,8 @@ class AuthPage extends StatefulWidget{
 class _AuthPageState extends State<AuthPage> {
   @override 
 
-
+  //all this file does is determine whether a user is logged in or not,
+  //user never "sees" this page.
 
   Widget build(BuildContext context){
     return Scaffold(
