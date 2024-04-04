@@ -18,4 +18,8 @@ YOU WILL HAVE TO RESTART AND ACCEPT IT.
 8. After some time, the app should open on the android device.
 9. Enjoy blabbing!
 
+KNOWN BUGS: 
 
+When listening to audio on the home page, the page flickers, this is due to the UI of waiting for connection between database and phone app, but since
+its constant then it will always buffer while doing something actively. 
+But we can't remove that waiting text because then it will look like its frozen and thats not a very good look. so atleast it's doing something
