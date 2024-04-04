@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
             const SizedBox(height: 50),
-            const Text("B!@6beR",
+            const Text("B!@6beR", // name of application is displayed
               style: TextStyle(color: Color.fromARGB(255, 249, 28, 31), fontWeight: FontWeight.w800, fontSize: 30 ),
               ),
             
@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                 onTap: widget.onTap,
                   child: const Text(
                   'Register Now!',
-                  style: TextStyle(
+                  style: TextStyle( // button switches to the signup page
                     color: Color.fromARGB(255, 249, 226, 30), fontWeight: FontWeight.bold),
                 ),
               ),

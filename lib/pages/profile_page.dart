@@ -10,7 +10,7 @@ import 'package:blabber/database/firestore.dart';
 import 'package:intl/intl.dart';
 
 class Profile extends StatefulWidget {
-  final String userEmail;
+  final String userEmail; // the username of the user to be displayed is passed as a variable
 
   const Profile({Key? key, required this.userEmail}) : super(key: key);
 
@@ -83,18 +83,16 @@ class _ProfileState extends State<Profile> {
   super.dispose();
   }
 
-
-
-
-    Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails(String userEmail) async {
-      return await FirebaseFirestore.instance.collection("Users").doc(userEmail).get();
-    }
+// retrieves the user details from the firebase database
+Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails(String userEmail) async { 
+  return await FirebaseFirestore.instance.collection("Users").doc(userEmail).get();
+}
 
   @override
   Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: const Text('Profile'),
+      title: const Text('Profile'), // Titles the header at the top of the page
       backgroundColor: Theme.of(context).colorScheme.inversePrimary,
 
     ),
@@ -133,7 +131,7 @@ class _ProfileState extends State<Profile> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          FloatingActionButton.extended(
+                          FloatingActionButton.extended( // Settings button brings user to profile settings page
                             onPressed: () {
                               Navigator.pushNamed(context, '/profile_settings_page');
                             },
@@ -144,7 +142,7 @@ class _ProfileState extends State<Profile> {
                             icon: const Icon(Icons.settings, color: Colors.black),
                           ),
                           const SizedBox(width: 16.0),
-                          FloatingActionButton.extended(
+                          FloatingActionButton.extended( // Follow button makes you follow the user (not implemented)
                             onPressed: () {},
                             heroTag: 'follow',
                             elevation: 0,
@@ -153,7 +151,7 @@ class _ProfileState extends State<Profile> {
                             icon: const Icon(Icons.alternate_email, color: Colors.white),
                           ),
                           const SizedBox(width: 16.0),
-                          FloatingActionButton.extended(
+                          FloatingActionButton.extended( // Friend button sends a friend request to the user (not implemented)
                             onPressed: () {},
                             heroTag: 'friend',
                             elevation: 0,
@@ -276,7 +274,7 @@ class _ProfileState extends State<Profile> {
 }
 
 
-class _ProfileInfoRow extends StatelessWidget {
+class _ProfileInfoRow extends StatelessWidget { // builds the B!@6s counter, the followers counter, and the friends counter
   final int numberOfBlabs;
 
   const _ProfileInfoRow({Key? key, required this.numberOfBlabs}) : super(key: key);
@@ -284,7 +282,7 @@ class _ProfileInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<ProfileInfoItem> _items = [
-      ProfileInfoItem("B!@6s", numberOfBlabs),
+      ProfileInfoItem("B!@6s", numberOfBlabs), // passed as a variable from a previous calculation
       ProfileInfoItem("Followers", 0),
       ProfileInfoItem("Friends", 0),
     ];
@@ -346,7 +344,7 @@ final String userEmail;
     return Stack(
       fit: StackFit.expand,
       children: [
-        Container(
+        Container( // builds background image of a sound wave
           margin: const EdgeInsets.only(bottom: 50),
           decoration: const BoxDecoration(
               image: DecorationImage(fit: BoxFit.cover,
@@ -364,7 +362,7 @@ final String userEmail;
             child: Stack(
               fit: StackFit.expand,
                 children: [
-                      StreamBuilder<DocumentSnapshot>(
+                      StreamBuilder<DocumentSnapshot>( // gets the user's data from firebase
                         stream: FirebaseFirestore.instance.collection('Users').doc(userEmail).snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
@@ -374,7 +372,7 @@ final String userEmail;
                           var userData = snapshot.data!.data() as Map<String, dynamic>;
                           var imageURL = userData['pfp'];
 
-                          return Container(
+                          return Container( // user profile picture
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.cover,

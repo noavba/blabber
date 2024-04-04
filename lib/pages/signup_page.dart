@@ -96,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
             const SizedBox(height: 50),
-            const Text("B!@6beR",
+            const Text("B!@6beR", // name of the application is displayed
               style: TextStyle(color: Color.fromARGB(255, 249, 28, 31), fontWeight: FontWeight.w800, fontSize: 30 ),
               ),
               
@@ -163,7 +163,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 onTap: widget.onTap,
                 child: Text(
                   ' Sign in',
-                  style: TextStyle(
+                  style: TextStyle( // button to switch back to the regular log in page
                     color: const Color.fromARGB(255, 249, 226, 30), fontWeight: FontWeight.bold),
                   ),
               ),
