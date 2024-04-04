@@ -197,7 +197,7 @@ class _HomeState extends State<Home> {
               //show loading circle
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                 child: CircularProgressIndicator(),
+                 child: Text("WAITING ON CONNECTION!"),
                 );
               }
               //get all posts

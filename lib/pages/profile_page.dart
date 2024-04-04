@@ -104,7 +104,7 @@ class _ProfileState extends State<Profile> {
       builder: (context, snapshot) {
         //loading
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: Text("WAITING ON CONNECTION!"));
         } 
         //error
         else if (snapshot.hasError) {
@@ -171,7 +171,7 @@ class _ProfileState extends State<Profile> {
                         // Show loading circle
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return Center(
-                            child: CircularProgressIndicator(),
+                            child: Text("WAITING ON CONNECTION!"),
                           );
                         }
                         final posts = snapshot.data!.docs.where((post) => post['userEmail'] == userEmail).toList();
@@ -192,7 +192,7 @@ class _ProfileState extends State<Profile> {
                         // Show loading circle
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return Center(
-                            child: CircularProgressIndicator(),
+                            child: Text("WAITING ON CONNECTION!"),
                           );
                         }
                         // Get posts for specified email, userEmail is in the Firestore database
@@ -368,7 +368,7 @@ final String userEmail;
                         stream: FirebaseFirestore.instance.collection('Users').doc(userEmail).snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
-                            return CircularProgressIndicator(); // Show a loading indicator while data is loading
+                            return Text("Waiting on Connection");
                           }
 
                           var userData = snapshot.data!.data() as Map<String, dynamic>;

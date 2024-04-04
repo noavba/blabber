@@ -6,6 +6,8 @@ Each post contains
 - A message (blab)
 - Username of the user
 - Timestamp
+- likes 
+- liked by (keeps track of which accounts liked it)
 
 */
 import 'dart:io';
@@ -23,7 +25,11 @@ class FirestoreDatabase{
   final CollectionReference posts = 
   FirebaseFirestore.instance.collection('Posts');
 
-  //post a message
+  //get a collection for comments
+  final CollectionReference comments = 
+  FirebaseFirestore.instance.collection('Comments');
+
+  //post a blab
 
   Future<DocumentReference<Object?>> addPost(String audioFileURL) async {
     // Upload audio file to Firebase Storage
@@ -42,6 +48,7 @@ class FirestoreDatabase{
       'likes': 0,
       'postID': 'placeholder',
       'likedBy': [],
+      'commentID': 'comment'
     });
     await postRef.update({'postID': postRef.id});
     return postRef;
@@ -87,5 +94,38 @@ class FirestoreDatabase{
     DocumentSnapshot postSnapshot = await FirebaseFirestore.instance.collection('Posts').doc(postId).get();
     int likes = postSnapshot.get('likes');
     return likes; 
+  }
+
+
+
+
+  Future<DocumentReference<Object?>> addComment(
+      String audioFileURL, String postId) async {
+    Reference storageRef = FirebaseStorage.instance
+        .ref()
+        .child('comment_audio_files')
+        .child('${DateTime.now().millisecondsSinceEpoch}.mp3');
+    UploadTask uploadTask = storageRef.putFile(File(audioFileURL));
+    TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
+    String downloadURL = await snapshot.ref.getDownloadURL();
+
+    DocumentReference commentRef = await comments.add({
+      'userEmail': user!.email,
+      'timestamp': Timestamp.now(),
+      'audioFileURL': downloadURL,
+      'postId': posts.id,
+    });
+
+    return commentRef;
+  }
+
+
+  Stream<QuerySnapshot> getCommentsStream(String postId) {
+    final commentsStream = FirebaseFirestore.instance
+        .collection('Comments')
+        .where('postId', isEqualTo: postId)
+        .orderBy('timestamp', descending: true)
+        .snapshots();
+    return commentsStream;
   }
 }

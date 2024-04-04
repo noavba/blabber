@@ -95,13 +95,32 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center, // Center contents horizontally
+      //center content
+      mainAxisAlignment: MainAxisAlignment.center, 
       children: [
         Column(
           children: [
             LikeButton(isLiked: isLiked, onTap: likePost),
             Text(likesCount.toString()), //display like count
           ],
+        ),
+        Column(children: [
+            GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamed(
+                      context, 
+                      '/post_view_screen',
+                      arguments: widget.postID,
+                      
+                      );
+                      print("Post ID is: " + widget.postID);
+                  },
+                  child: const Icon(
+                    Icons.comment,
+                    size:30,
+                  ),
+                ),
+        ],
         ),
         Slider(
           min: 0, 

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
-import 'profile_page.dart';
 import 'package:blabber/components/app_drawer.dart';
 class ProfileSettingsPage extends StatefulWidget{
   const ProfileSettingsPage({super.key});
@@ -23,7 +22,6 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
 
     return Scaffold(
       appBar: AppBar(
@@ -41,11 +39,11 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                 color: Colors.white,
                 border: Border.all(color: Colors.black)
               ),
-              padding: EdgeInsets.all(25),
-              child: Text("No Profile Picture selected"),
+              padding: const EdgeInsets.all(25),
+              child: const Text("No Profile Picture selected"),
             ),
             Container(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: ElevatedButton(
                 child: const Text ("View Camera Roll"),
                 onPressed: (){
@@ -55,7 +53,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
               ),
 
               Container(
-                padding: EdgeInsets.all(50),
+                padding: const EdgeInsets.all(50),
                 child: ElevatedButton(
                   child: const Text("Return to Profile"),
                   onPressed: (){
@@ -91,7 +89,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
     final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
     if(returnedImage == null) return;
     setState((){
-      _selectedImage = File(returnedImage!.path);
+      _selectedImage = File(returnedImage.path);
     });
     
       String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
