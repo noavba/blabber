@@ -1,16 +1,21 @@
 # blabber
 
-A new Flutter project.
+The coolest, hottest and interesting social media app.
 
-## Getting Started
+## NOTICE 
+MAKE SURE TO ACCEPT MICROPHONE PERMISSION OR THE APP WILL NOT WORK AT ALL. IT WILL THROW AN ERROR AND 
+YOU WILL HAVE TO RESTART AND ACCEPT IT. 
 
-This project is a starting point for a Flutter application.
+## How to run blabber
 
-A few resources to get you started if this is your first Flutter project:
+1. Download the Zip File
+2. Extract said zip file
+3. Open it in an IDE that allows flutter development, android studio/visual studio code, etc.
+4. Ensure you have flutter, dart and android SDKs installed.
+5. Navigate to Blabber/Lib/main.dart
+6. Ensure you have an android emulator device selected to run the app with
+7. Click run on the file
+8. After some time, the app should open on the android device.
+9. Enjoy blabbing!
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
