@@ -1,6 +1,6 @@
 # blabber
-
-The coolest, hottest and interesting social media app.
+A collaborative undergrad unfinished project by two students. 
+Combined effort of github.com/noavba and github.com/jrmlegere
 
 ## NOTICE 
 MAKE SURE TO ACCEPT MICROPHONE PERMISSION OR THE APP WILL NOT WORK AT ALL. IT WILL THROW AN ERROR AND 
@@ -21,5 +21,5 @@ YOU WILL HAVE TO RESTART AND ACCEPT IT.
 KNOWN BUGS: 
 
 When listening to audio on the home page, the page flickers, this is due to the UI of waiting for connection between database and phone app, but since
-its constant then it will always buffer while doing something actively. 
+its constant then it will always buffer while doing something actively. (overuse of await async )
 But we can't remove that waiting text because then it will look like its frozen and thats not a very good look. so atleast it's doing something
