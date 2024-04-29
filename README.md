@@ -1,5 +1,5 @@
 # blabber
-A collaborative undergrad unfinished project by two students. 
+A collaborative undergrad WIP project by two students. 
 Combined effort of github.com/noavba and github.com/jrmlegere
 
 ## NOTICE 
